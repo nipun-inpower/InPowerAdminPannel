@@ -1,0 +1,331 @@
+{% extends 'layouts/master.html' %}
+{% load static %} 
+
+
+{% block content %}
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="page d-flex flex-row flex-column-fluid">
+            <!--begin::Aside-->
+            <div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside"
+                data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
+                data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
+                data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+                <!--begin::Aside menu-->
+                {% include 'components/leftNavigationBar.html' %}
+
+                <!--end::Aside menu-->
+            </div>
+            <!--end::Aside-->
+            <!--begin::Wrapper-->
+            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                {% include 'components/header.html' with default_title="Selfie List" %}
+
+                 
+
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <!--begin::Container-->
+                    <div id="kt_content_container" class="container-fluid">
+                        <div class="row g-5 g-xxl-10">
+                            <div class="col-xl-12 mb-5 mb-xxl-10">
+                                <!--begin::Table Widget 3-->
+                                <div class="card card-flush h-xl-100">
+                                    <!--begin::Card header-->
+                                    <div class="card-header py-7">
+                                        <!--begin::Tabs-->
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="pb-3 me-4 cursor-pointer nav-item" role="presentation">
+                                                <button
+                                                    class="fs-4 text-muted fw-bolder bg-transparent nav-link rounded-0 active"
+                                                    id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                                                    type="button" role="tab" aria-controls="pills-home"
+                                                    aria-selected="true">All</button>
+                                            </li>
+                                            <li class="pb-3 me-4 cursor-pointer nav-item" role="presentation">
+                                                <button class="fs-4 fw-bolder text-muted rounded-0 bg-transparent nav-link"
+                                                    id="pills-profile-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-profile" type="button" role="tab"
+                                                    aria-controls="pills-profile" aria-selected="false">Approved</button>
+                                            </li>
+                                            <li class="pb-3 me-4 cursor-pointer nav-item" role="presentation">
+                                                <button class="fs-4 fw-bolder text-muted rounded-0 bg-transparent nav-link"
+                                                    id="pills-contact-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-contact" type="button" role="tab"
+                                                    aria-controls="pills-contact" aria-selected="false">Pending</button>
+                                            </li>
+                                        </ul>
+                                        <!--end::Tabs-->
+
+                                    </div>
+                                    <!--end::Card header-->
+                                    <!--begin::Card body-->
+                                    <div class="tab-content card-body pt-1" id="pills-tabContent">
+
+                                        <!--begin::Seprator-->
+                                        <div class="separator separator-dashed my-5"></div>
+                                        <!--end::Seprator-->
+
+                                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                            aria-labelledby="pills-home-tab">
+                                           
+                                            <!--begin::Table-->
+                                            <table id="all_users_listing"
+                                                class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                                data-kt-table-widget-3="all">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Profile Image</th>
+                                                        <th>Selfie Image</th>
+                                                        <th>Name</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for user in users %}
+                                                    <tr>
+                                                        <td class="group_name">
+                                                            <img src="{{ user.profileImageUrl }}" height="200px" width="200px" />
+                                                            </div>
+                                                        </td>
+                                                        <td class="group_name">
+                                                            <img src="{{ user.selfieImageUrl }}" height="200px" width="200px" />
+                                                            </div>
+                                                        </td>
+                                                        <td class="group_description">
+                                                            <div class="fs-7 text-muted fw-bolder">
+                                                                {{ user.firstname }} {{ user.lastname }}
+                                                            </div>
+                                                        </td>
+                                                        <td class="group_status">
+                                                            <span
+                                                                class="badge badge-light-success">{{ user.verified }}</span>
+                                                        </td>
+                                                     
+                                                        <td class="min-w-125px">
+                                                            <div class="d-grid gap-2 d-md-block">
+                                                                <a class="btn btn-primary" href="{% url 'verify-user' id=user.id %}"> Verify</a>
+
+
+                                                               
+                                                                    </div>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            <!--end::Table-->
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination">
+                                                    {% if user.data.getUsersList.0 %}
+                                                    {% if user.data.getUsersList.0.prevPage > 0 %}
+                                                        <li id="prevPage" class="page-item">
+                                                            <a class="page-link" href="{% url 'users' user.data.getUsersList.0.prevPage %}" tabindex="-1">Previous</a>
+                                                        </li>
+                                                    {% else %}
+                                                        <li id="prevPage" class="page-item disabled">
+                                                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                                        </li>
+                                                    {% endif %}
+                                                    <li id="currentPage" class="page-item"><a class="page-link" href="#">{{ user.data.getUsersList.0.page }}</a></li>
+                                                    {% if user.data.getUsersList.0.hasNext %}
+                                                        <li id="hasNext" class="page-item"><a class="page-link" href="{% url 'users' user.data.getUsersList.0.nextPage %}">Next</a></li>
+                                                    {% else %}
+                                                        <li id="hasNext" class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                                                    {% endif %}
+                                                {% endif %}
+                                                
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                            aria-labelledby="pills-profile-tab">
+                                            <!--begin::Table-->
+                                            <table id="all_users_listing"
+                                                class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                                data-kt-table-widget-3="all">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Profile Image</th>
+                                                        <th>Selfie Image</th>
+                                                        <th>Name</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for user in users %}
+                                                    {% if user.verified is True %}
+                                                    <tr>
+                                                        <td class="group_name">
+                                                            <img src="{{ user.profileImageUrl }}" height="200px" width="200px" />
+                                                            </div>
+                                                        </td>
+                                                        <td class="group_name">
+                                                            <img src="{{ user.selfieImageUrl }}" height="200px" width="200px" />
+                                                            </div>
+                                                        </td>
+                                                        <td class="group_description">
+                                                            <div class="fs-7 text-muted fw-bolder">
+                                                                {{ user.firstname }} {{ user.lastname }}
+                                                            </div>
+                                                        </td>
+                                                        <td class="group_status">
+                                                            <span
+                                                                class="badge badge-light-success">{{ user.verified }}</span>
+                                                        </td>
+                                                     
+                                                        <td class="min-w-125px">
+                                                            <div class="d-grid gap-2 d-md-block">
+                                                                <a class="btn btn-primary" href="{% url 'verify-user' id=user.id %}"> Verify</a>
+
+
+                                                               
+                                                                    </div>
+                                                        </td>
+                                                    </tr>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            <!--end::Table-->
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination">
+                                                    {% if user.data.getUsersList.0 %}
+                                                        {% if user.data.getUsersList.0.prevPage > 0 %}
+                                                            <li id="prevPage" class="page-item">
+                                                                <a class="page-link" href="{% url 'users' user.data.getUsersList.0.prevPage %}" tabindex="-1">Previous</a>
+                                                            </li>
+                                                        {% else %}
+                                                            <li id="prevPage" class="page-item disabled">
+                                                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                                            </li>
+                                                        {% endif %}
+                                                        <li id="currentPage" class="page-item"><a class="page-link" href="#">{{ user.data.getUsersList.0.page }}</a></li>
+                                                        {% if user.data.getUsersList.0.hasNext %}
+                                                            <li id="hasNext" class="page-item"><a class="page-link" href="{% url 'users' user.data.getUsersList.0.nextPage %}">Next</a></li>
+                                                        {% else %}
+                                                            <li id="hasNext" class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </ul>
+                                                
+                                            </nav>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                                            aria-labelledby="pills-contact-tab">
+                                            <!--begin::Table-->
+                                            <table id="all_users_listing"
+                                                class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                                data-kt-table-widget-3="all">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Profile Image</th>
+                                                        <th>Selfie Image</th>
+                                                        <th>Name</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for user in users %}
+                                                    {% if user.verified is False %}
+                                                    <tr>
+                                                        <td class="group_name">
+                                                            <img src="{{ user.profileImageUrl }}" height="200px" width="200px" />
+                                                            </div>
+                                                        </td>
+                                                        <td class="group_name">
+                                                            <img src="{{ user.selfieImageUrl }}" height="200px" width="200px" />
+                                                            </div>
+                                                        </td>
+                                                        <td class="group_description">
+                                                            <div class="fs-7 text-muted fw-bolder">
+                                                                {{ user.firstname }} {{ user.lastname }}
+                                                            </div>
+                                                        </td>
+                                                        <td class="group_status">
+                                                            <span
+                                                                class="badge badge-light-success">{{ user.verified }}</span>
+                                                        </td>
+                                                     
+                                                        <td class="min-w-125px">
+                                                            <div class="d-grid gap-2 d-md-block">
+                                                                <a class="btn btn-primary" href="{% url 'verify-user' id=user.id %}"> Verify</a>
+
+
+                                                               
+                                                                    </div>
+                                                        </td>
+                                                    </tr>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            <!--end::Table-->
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination">
+                                                    {% if user.data.getUsersList.0 %}
+                                                        {% if user.data.getUsersList.0.prevPage > 0 %}
+                                                            <li id="prevPage" class="page-item">
+                                                                <a class="page-link" href="{% url 'users' user.data.getUsersList.0.prevPage %}" tabindex="-1">Previous</a>
+                                                            </li>
+                                                        {% else %}
+                                                            <li id="prevPage" class="page-item disabled">
+                                                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                                            </li>
+                                                        {% endif %}
+                                                        <li id="currentPage" class="page-item"><a class="page-link" href="#">{{ user.data.getUsersList.0.page }}</a></li>
+                                                        {% if user.data.getUsersList.0.hasNext %}
+                                                            <li id="hasNext" class="page-item"><a class="page-link" href="{% url 'users' user.data.getUsersList.0.nextPage %}">Next</a></li>
+                                                        {% else %}
+                                                            <li id="hasNext" class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </ul>
+                                                
+                                            </nav>
+                                        </div>
+
+
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Table Widget 3-->
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Content-->
+                <!--begin::Footer-->
+                {% include 'components/footer.html' %}
+
+                <!--end::Footer-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Root-->
+    <!--end::Main-->
+
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+        <span class="svg-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1"
+                    transform="rotate(90 13 6)" fill="black" />
+                <path
+                    d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                    fill="black" />
+            </svg>
+        </span>
+        <!--end::Svg Icon-->
+    </div>
+    <!--end::Scrolltop-->
+
+    {% endblock %}

@@ -1,0 +1,194 @@
+
+{% extends 'layouts/master.html' %}
+{% load static %} 
+
+{% block title %}Category {% endblock %}
+
+{% block content %}
+
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="page d-flex flex-row flex-column-fluid">
+            <!--begin::Aside-->
+            <div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside"
+                data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
+                data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
+                data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+                <!--begin::Aside menu-->
+                {% include 'components/leftNavigationBar.html' %}
+                <!--end::Aside menu-->
+            </div>
+            <!--end::Aside-->
+            <!--begin::Wrapper-->
+            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                {% include 'components/header.html' with default_title="Communities" %}
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <!--begin::Container-->
+
+                    <div id="kt_content_container" class="container-fluid">
+                        {% if request.session.message %}
+                            <div class="alert alert-success">
+                                {{ request.session.message }}
+                            </div>
+                        {% endif %}
+
+                        <div class="row g-5 g-xxl-10">
+                            <div class="col-xl-12 mb-5 mb-xxl-10">
+                                <!--begin::Table Widget 3-->
+                                <div class="card card-flush h-xl-100">
+
+                                    <!--begin::Card body-->
+                                    <div class="tab-content card-body pt-1">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <table
+                                                    class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3 table table-striped"
+                                                    data-kt-table-widget-3="all">
+                                                    <thead class="">
+                                                        <tr>
+                                                            <th class="fs-3 text-muted fw-bolder">Name</th>
+                                                            <th class="fs-3 text-muted fw-bolder">Description</th>
+                                                            <th class="fs-3 text-muted fw-bolder">Image</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for blogCategories in blogCategories %}
+                                                            <tr>
+                                                                <td class="fs-4 text-muted fw-bolder ps-3">
+                                                                    {{blogCategories.name}}
+                                                                </td>
+                                                             
+                                                                <td class="fs-4 text-muted fw-bolder ps-3">
+                                                                    {{blogCategories.description}}
+                                                                </td>
+                                                                <td class="fs-4 text-muted fw-bolder ps-3">
+                                                                    <img style="width: 220px;"
+                                                                                src="{{ blogCategories.image }}">
+                                                                </td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="exampleModal1}"
+                                                                tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                                                Edit Category</h5>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+
+                                                                        <div class="mx-5 my-5 content">
+                                                                            <label for="exampleInputEmail1"
+                                                                                class="form-label">Category
+                                                                                Name</label>
+                                                                            <input type="text"
+                                                                                id="catName1"
+                                                                                class="form-control" name="category_name"
+                                                                                value="1" required>
+
+
+                                                                            <div class="button_container mt-5">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <button type="button"
+                                                                                    class="btn btn-primary"
+                                                                                    onclick="editCategory1">Save
+                                                                                    changes</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </tbody>
+                                                </table>
+                                                <!--end::Table-->
+
+                                                <nav aria-label="Page navigation example">
+                                                    <ul class="pagination">
+                                                        {% if pages.prevPage > 0 %}
+                                                            <li id="prevPage" class="page-item">
+                                                                <a class="page-link" href="{% url 'category' pages.prevPage %}" tabindex="-1">Previous</a>
+                                                            </li>
+                                                        {% else %}
+                                                            <li id="prevPage" class="page-item disabled">
+                                                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                                            </li>
+                                                        {% endif %}
+                                                        <li id="currentPage" class="page-item"><a class="page-link" href="#">{{ pages.page }}</a></li>
+                                                        {% if pages.hasNext %}
+                                                            <li id="hasNext" class="page-item"><a class="page-link" href="{% url 'category' pages.nextPage %}">Next</a></li>
+                                                        {% else %}
+                                                            <li id="hasNext" class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                                                        {% endif %}
+                                                    </ul>
+                                                    
+                                                </nav>
+                                            </div>
+                                            <div class="col-md-6 py-5">
+                                                <h3 class="fs-3 text-muted fw-bolder">Create Communities</h3>
+                                                <form method="post"  action="{% url 'creatCommunities' %}" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label">Communities Name</label>
+                                                        <input type="text" class="form-control" name="name" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label">Communities Description</label>
+                                                        <input type="text" class="form-control" name="description" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label">Communities Image</label>
+                                                        <input type="file" class="form-control" name="image" required>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </form>
+                                                
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Table Widget 3-->
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Content-->
+                <!--begin::Footer-->
+                {% include 'components/footer.html' %}
+                <!--end::Footer-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Root-->
+    <!--end::Main-->
+
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+        <span class="svg-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1"
+                    transform="rotate(90 13 6)" fill="black" />
+                <path
+                    d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                    fill="black" />
+            </svg>
+        </span>
+        <!--end::Svg Icon-->
+    </div>
+    <!--end::Scrolltop-->
+    
+    </script>
+    {% endblock %}

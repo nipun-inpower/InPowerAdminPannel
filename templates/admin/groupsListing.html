@@ -1,0 +1,1369 @@
+{% extends 'layouts/master.html' %}
+{% load static %} 
+
+
+{% block content %}
+
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="page d-flex flex-row flex-column-fluid">
+            <!--begin::Aside-->
+            <div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside"
+                data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
+                data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
+                data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+                <!--begin::Aside menu-->
+                {% include 'components/leftNavigationBar.html' %}
+                <!--end::Aside menu-->
+            </div>
+            <!--end::Aside-->
+            <!--begin::Wrapper-->
+            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                {% include 'components/header.html' with default_title="Groups" %}
+
+                {% if request.session.message %}
+                <div class="alert alert-success">
+                    {{ request.session.message }}
+                </div>
+            {% endif %}
+            
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <!--begin::Container-->
+                    <div id="kt_content_container" class="container-fluid">
+                        <div class="row g-5 g-xxl-10">
+                            <div class="col-xl-12 mb-5 mb-xxl-10">
+                                <!--begin::Table Widget 3-->
+                                <div class="card card-flush h-xl-100">
+                                    <!--begin::Card header-->
+                                    <div class="card-header py-7">
+                                        <!--begin::Tabs-->
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="pb-3 me-4 cursor-pointer nav-item" role="presentation">
+                                                <button
+                                                    class="fs-4 text-muted fw-bolder bg-transparent nav-link rounded-0 active"
+                                                    id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                                                    type="button" role="tab" aria-controls="pills-home"
+                                                    aria-selected="true">All</button>
+                                            </li>
+                                            <li class="pb-3 me-4 cursor-pointer nav-item" role="presentation">
+                                                <button class="fs-4 fw-bolder text-muted rounded-0 bg-transparent nav-link"
+                                                    id="pills-profile-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-profile" type="button" role="tab"
+                                                    aria-controls="pills-profile" aria-selected="false">Approved</button>
+                                            </li>
+                                            <li class="pb-3 me-4 cursor-pointer nav-item" role="presentation">
+                                                <button class="fs-4 fw-bolder text-muted rounded-0 bg-transparent nav-link"
+                                                    id="pills-contact-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-contact" type="button" role="tab"
+                                                    aria-controls="pills-contact" aria-selected="false">Pending</button>
+                                            </li>
+                                        </ul>
+                                        <!--end::Tabs-->
+                                        <!--begin::Create campaign button-->
+                                        <div class="card-toolbar">
+                                            <a href="#" type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#kt_modal_create_campaign">Create
+                                                Group</a>
+                                        </div>
+                                        <!--end::Create campaign button-->
+                                    </div>
+                                    <!--end::Card header-->
+                                    <!--begin::Card body-->
+                                    <div class="tab-content card-body pt-1" id="pills-tabContent">
+
+                                        <!--begin::Seprator-->
+                                        <div class="separator separator-dashed my-5"></div>
+                                        <!--end::Seprator-->
+
+                                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                            aria-labelledby="pills-home-tab">
+                                            <!--begin::Table-->
+                                            <table id="all_groups_listing"
+                                                class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                                data-kt-table-widget-3="all">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Description</th>
+                                                        <th>groupPicture</th>
+                                                        <th>category</th>
+                                                        <th>isPrivate</th>
+                                                        <th>userCount</th>
+                                                        <th>createdBy</th>
+                                                       <th>createdAt</th>
+                                                    </tr>
+                                                    {% for group in groups %}
+                                                    <tr>
+                                                        <th>{{ group.name }}</th>
+                                                        <th>{{ group.description }}</th>
+                                                        <th><img src="{{ group.groupPicture }}" alt="S3 Image" style="max-width: 100px; height: auto;"></th>
+                                                        <th>{{ group.category }}</th>
+                                                        <th>{{ group.isPrivate }}</th>
+                                                        <th>{{ group.userCount }}</th>
+                                                        <th>{{ group.createdBy }}</th>
+                                                        <th>{{ group.createdAt }}</th>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </thead>
+                                                <tbody>
+
+
+                                                </tbody>
+                                            </table>
+                                            <!--end::Table-->
+                                            <nav aria-label="Page navigation example">
+                                                <ul id="all_pagination" class="pagination">
+
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                            aria-labelledby="pills-profile-tab">
+                                            <!--begin::Table-->
+                                            <table id="approved_groups_listing"
+                                                class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                                data-kt-table-widget-3="all">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Description</th>
+                                                        <th>Status</th>
+                                                        <th>Team</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+
+                                                </tbody>
+                                            </table>
+                                            <!--end::Table-->
+                                            <nav aria-label="Page navigation example">
+                                                <ul id="approved_pagination" class="pagination">
+
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                                            aria-labelledby="pills-contact-tab">
+                                            <!--begin::Table-->
+                                            <table id="pending_groups_listing"
+                                                class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                                data-kt-table-widget-3="all">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Description</th>
+                                                        <th>Status</th>
+                                                        <th>Team</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+
+                                                </tbody>
+                                            </table>
+                                            <!--end::Table-->
+                                            <nav aria-label="Page navigation example">
+                                                <ul id="pending_pagination" class="pagination">
+
+                                                </ul>
+                                            </nav>
+                                        </div>
+
+
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Table Widget 3-->
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Content-->
+                <!--begin::Footer-->
+                {% include 'components/footer.html' %}
+                <!--end::Footer-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Root-->
+    <!--end::Main-->
+
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+        <span class="svg-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1"
+                    transform="rotate(90 13 6)" fill="black" />
+                <path
+                    d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                    fill="black" />
+            </svg>
+        </span>
+        <!--end::Svg Icon-->
+    </div>
+    <!--end::Scrolltop-->
+    <!--begin::Modals-->
+    <!--begin::Modal - Offer A Deal-->
+    <div class="modal fade" id="kt_modal_create_campaign" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-xl p-9">
+            <!--begin::Modal content-->
+            <div class="modal-content modal-rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header py-4 d-flex justify-content-between">
+                    <!--begin::Modal title-->
+                    <h2>Create New Group</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                    rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                    transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <div class="modal-body scroll-y">
+                    <div class="content">
+                        <form id="wizard" action="#">
+                            <h2>Create Group</h2>
+                            <section data-step="0">
+                                <div class="current" data-kt-stepper-element="content">
+                                    <!--begin::Wrapper-->
+                                    <div class="w-100">
+                                        <!--begin::Heading-->
+                                        <div class="pb-10 pb-lg-10">
+                                            <h2 class="fw-bolder d-flex align-items-center text-dark">Setup Group Details
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                    title="Campaign name will be used as reference within your campaign reports"></i>
+                                            </h2>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="fv-row mb-10">
+                                                    <!--begin::Label-->
+                                                    <label class="d-block fw-bold fs-6 mb-5">
+                                                        <span class="required">Group Image</span>
+                                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                            data-bs-toggle="tooltip"
+                                                            title="E.g. Select a logo to represent the company that's running the campaign."></i>
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Image input-->
+                                                    <div class="image-input image-input-empty image-input-outline"
+                                                        data-kt-image-input="true"
+                                                        style="background-image: url({% static 'images/blank-image.svg' %})"> 
+                                                        <!--begin::Preview existing avatar-->
+                                                        <div class="image-input-wrapper w-150px h-150px"></div>
+                                                        <!--end::Preview existing avatar-->
+                                                        <!--begin::Label-->
+                                                        <label
+                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                            data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                                            title="Change avatar">
+                                                            <i class="bi bi-pencil-fill fs-7"></i>
+                                                            <!--begin::Inputs-->
+                                                            <input type="file" id="groupImage" name="avatar"
+                                                                accept=".png, .jpg, .jpeg" />
+                                                            <input type="hidden" name="avatar_remove" />
+                                                            <!--end::Inputs-->
+                                                        </label>
+                                                        <!--end::Label-->
+                                                        <!--begin::Cancel-->
+                                                        <span
+                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                            data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
+                                                            title="Cancel avatar">
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
+                                                        <!--end::Cancel-->
+                                                        <!--begin::Remove-->
+                                                        <span
+                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                            data-kt-image-input-action="remove" data-bs-toggle="tooltip"
+                                                            title="Remove avatar">
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
+                                                        <!--end::Remove-->
+                                                    </div>
+                                                    <!--end::Image input-->
+                                                    <!--begin::Hint-->
+                                                    <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                                                    <!--end::Hint-->
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="mb-6 fv-row">
+                                                    <!--begin::Label-->
+                                                    <label class="required form-label mb-3">Group Title</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" id="group_title"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        name="group_title" placeholder="" value="" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <div class="fv-row">
+                                                    <!--begin::Label-->
+                                                    <label class="fs-6 fw-bold mb-2">Group Description</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Label-->
+                                                    <textarea id="details_description" class="form-control form-control-solid" rows="3"
+                                                        placeholder="Enter Deal Description" name="details_description"></textarea>
+                                                    <!--end::Label-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="fv-row mb-6">
+                                            <!--begin::Label-->
+                                            <label class="required fs-6 fw-bold mb-2">Select Category</label>
+                                            <!--end::Label-->
+                                            
+                                            <!--begin::Input-->
+                                            <select name="group_category" class="form-select form-select-solid"
+                                                id="group_category" data-placeholder="Select an option"
+                                                name="details_customer">
+                                                <option selected>--select--</option>
+                                                    <option value="mind">Mind</option>
+                                                    <option value="Health">Health</option>
+                                            </select>
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--begin::Input group-->
+                                        <div class="fv-row mb-8">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-bold mb-2">Group Privacy
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                    title="Show your ads to either men or women, or select 'All' for both"></i></label>
+                                            <!--End::Label-->
+                                            <!--begin::Row-->
+                                            <div class="row g-9" data-kt-buttons="true"
+                                                data-kt-buttons-target="[data-kt-button='true']">
+                                                <!--begin::Col-->
+                                                <div class="col">
+                                                    <!--begin::Option-->
+                                                    <label
+                                                        class="btn btn-outline btn-outline-dashed btn-outline-default active d-flex text-start p-6"
+                                                        data-kt-button="true">
+                                                        <!--begin::Radio-->
+                                                        <span
+                                                            class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                                                            <input id="group_privacy" class="form-check-input"
+                                                                type="radio" name="group_privacy" value="Public"
+                                                                checked="checked" />
+                                                        </span>
+                                                        <!--end::Radio-->
+                                                        <!--begin::Info-->
+                                                        <span class="ms-5">
+                                                            <span
+                                                                class="fs-4 fw-bolder text-gray-800 d-block">Public</span>
+                                                        </span>
+                                                        <!--end::Info-->
+                                                    </label>
+                                                    <!--end::Option-->
+                                                </div>
+                                                <!--end::Col-->
+                                                <!--begin::Col-->
+                                                <div class="col">
+                                                    <!--begin::Option-->
+                                                    <label
+                                                        class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
+                                                        data-kt-button="true">
+                                                        <!--begin::Radio-->
+                                                        <span
+                                                            class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                                                            <input id="group_privacy" class="form-check-input"
+                                                                type="radio" name="group_privacy" value="Private" />
+                                                        </span>
+                                                        <!--end::Radio-->
+                                                        <!--begin::Info-->
+                                                        <span class="ms-5">
+                                                            <span
+                                                                class="fs-4 fw-bolder text-gray-800 d-block">Private</span>
+                                                        </span>
+                                                        <!--end::Info-->
+                                                    </label>
+                                                    <!--end::Option-->
+                                                </div>
+                                                <!--end::Col-->
+                                            </div>
+                                            <!--end::Row-->
+                                        </div>
+                                        <!--end::Input group-->
+                                    </div>
+                                    <!--end::Wrapper-->
+                                </div>
+                            </section>
+
+                            <h2>Questions </h2>
+                            <h2>Are you want add questions? </h2>
+                            
+                            
+
+                                <div class="row ml-5" >
+                                    <div class="col-md-12 ml-auto" >
+                                        
+                                        <form id="checkbox-form mb-5" >
+                                            <div class="form-check">
+                                                <input class="form-check-input single-checkbox" type="checkbox" id="checkbox1">
+                                                <label class="form-check-label" for="checkbox1">
+                                                  Yes
+                                                </label>
+                                              </div> <br>
+            
+                                              <div class="form-check">
+                                                <input class="form-check-input single-checkbox" type="checkbox" id="checkbox2">
+                                                <label class="form-check-label" for="checkbox2">
+                                                  No
+                                                </label>
+                                              </div> 
+                                              
+                                            </form>
+                                            <button class="btn btn-primary mt-5" type="button" id="add-button">Submit</button>
+                                    </div>  
+                                    
+                                </div>       
+                           
+                            
+
+                            <section data-step="1" id="myquestionlist" style="display: none;">
+                                <!--begin::Step 2-->
+                                <div data-kt-stepper-element="content">
+                                    <!--begin::Wrapper-->
+                                    <div class="w-100">
+                                        <!--begin::Heading-->
+                                        <div class="pb-10 pb-lg-12">
+                                            <!--begin::Title-->
+                                            <h1 class="fw-bolder text-dark">Create Questions</h1>
+                                            <!--end::Title-->
+                                        </div>
+                                        <!--end::Heading-->
+                                        <!--begin::Input group-->
+                                        <div class="fv-row mb-10">
+                                            <div style="position: relative;border: 2px solid #fd466c;border-radius: 10px;border-style: double;"
+                                                class="p-5 mb-3">
+                                                <p style="position: absolute;top: -30px;left: 9px;background: white;padding: 2px 12px;font-weight: 600;border: 2px solid #fd466c;border-style: double;border-radius: 26px;"
+                                                    class="mb-0">Question Details </p>
+                                                <button type="button" style="top: -14px;right: 125px;padding: 2px 10px;"
+                                                    class="position-absolute btn btn-primary"
+                                                    onclick="add_more_question()">
+                                                    <i class="fa fa-plus mr-2"></i> Add Question
+                                                </button>
+
+                                                <div class="p-2"></div>
+                                                <div class="question_container">
+                                                    <div class="questions">
+                                                        <div class="mb-1 fv-row">
+                                                            <label class="required form-label mb-1">Question
+                                                                Description</label>
+                                                            <button type="button"
+                                                                style="top: -14px;right: 10px;padding: 2px 10px;"
+                                                                class="float-end mb-4 btn btn-primary"
+                                                                id="add_more_options">
+                                                                <i class="fa fa-plus mr-2"></i> Add Option
+                                                            </button>
+                                                            <input type="text"
+                                                                class="form-control form-control-lg form-control-solid"
+                                                                name="q_title" placeholder="" value="">
+                                                        </div>
+                                                        <div class="row mt-4" id="q_type_option">
+                                                            <div class="col-md-3">
+                                                                <div class="mb-1 fv-row">
+                                                                    <label class="required form-label mb-1">Option</label>
+                                                                    <input type="text"
+                                                                        class="form-control form-control-lg form-control-solid"
+                                                                        name="options[]" placeholder="" value="">
+                                                                        <br><input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" onclick="onlyOne(this)">
+                                                    <label for="vehicle1"> Mark as Answer</label><br>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="mb-1 fv-row">
+                                                                    <label class="required form-label mb-1">Option</label>
+                                                                    <input type="text"
+                                                                        class="form-control form-control-lg form-control-solid"
+                                                                        name="options[]" placeholder="" value="">
+                                                                        <br><input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" onclick="onlyOne(this)">
+                                                    <label for="vehicle1"> Mark as Answer</label><br>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end::Wrapper-->
+                                </div>
+                                <!--end::Step 2-->
+                            </section>
+
+                            <h1>Badges</h1>
+                            <section data-step="2">
+                                <!--begin::Heading-->
+                                <div class="pb-10 pb-lg-12">
+                                    <!--begin::Title-->
+                                    <h2 class="fw-bolder text-dark">Select Badge</h2>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Heading-->
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-4 d-flex justify-content-center align-items-center">
+                                        
+                                        <select class="js-select2" multiple="single" id="badges">
+                                                <option value="Gold" data-badge="">Gold </option>
+                                                <option value="Platinum" data-badge="">Platinum </option>
+                                               
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </section>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                            {% comment %} <h2>Finish</h2>
+                            <section data-step="3">
+                                <h3>Success!</h3>
+                            </section> {% endcomment %}
+                        </form>
+                    </div>
+                </div>
+                <!--begin::Modal body-->
+            </div>
+        </div>
+    </div>
+    <!--end::Modal - Offer A Deal-->
+
+    <div class="modal fade" id="kt_modal_edit_group" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-xl p-9">
+            <!--begin::Modal content-->
+            <div class="modal-content modal-rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header py-4 d-flex justify-content-between">
+                    <!--begin::Modal title-->
+                    <h2>Update Group</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                    rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                    transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <div class="modal-body scroll-y">
+                    <div id="editGroupContainer" class="content">
+
+                    </div>
+                </div>
+                <!--begin::Modal body-->
+            </div>
+        </div>
+    </div>
+    <!--end::Modal - Offer A Deal-->
+
+    <script>
+        $(document).ready(function(){
+          $('.single-checkbox').on('change', function() {
+            $('.single-checkbox').not(this).prop('checked', false);
+          });
+        });
+      </script>
+
+      <script>
+        document.getElementById('add-button').addEventListener('click', function() {
+
+            if (document.getElementById('checkbox1').checked) {
+                document.getElementById('myquestionlist').style.display = 'block';
+            }
+            else {
+                document.getElementById('myquestionlist').style.display = 'none';
+                }
+                
+        });
+    </script>
+{% comment %} 
+
+    <script>
+        //All group listings
+        function groupListings(nextPage) {
+            $('#all_groups_listing tbody tr').remove();
+            var settings = {
+                "url": "{{ env('API_URL') }}groups",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    query: "query{\n  groups(perPage:10, pageNo:" + nextPage +
+                        "){\n    firstPage\n    hasNext\n    nextPage\n    page\n    prevPage\n    list {\n      id\n     name\n   badge {\n        id\n        image\n        order\n        video\n      }\n      category {\n        id\n        name\n        published\n      }\n      description\n      featuredImage\n      id\n      members {\n        id\n        bio\n        email\n        fullname\n        groupId\n        phone\n        profilePhoto\n        role\n        selfieImg\n        status\n        userId\n        \n      }\n      status\n      visibility\n      \n    }\n  }\n}\n",
+                    variables: {}
+                })
+            };
+
+            $.ajax(settings).done(function(response) {
+                console.log(response.data.groups);
+                var pages =
+                    `  <li id="prevPage" class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" onclick="groupListings(${response.data.groups.prevPage});">Previous</a></li>
+                                    <li id="currentPage" class="page-item"><a class="page-link" href="#">${response.data.groups.page}</a></li>
+                                    <li id="hasNext" class="page-item"><a class="page-link" onclick="groupListings(${response.data.groups.nextPage});" href="#">Next</a></li>`;
+                $('#all_pagination').html(pages);
+
+                if (response.data.groups.prevPage > 0) {
+                    console.log(response.data.groups.prevPage);
+                    $('#prevPage').removeClass("disabled");
+                }
+
+                if (response.data.groups.hasNext == false) {
+                    $('#hasNext').addClass("disabled");
+                }
+                $.each(response.data.groups.list, function(indexGroups, groups) {
+                    /// do stuff
+                    //console.log(groups);
+                    var table_row = `<tr>
+                        <td class="group_name">
+
+                            <div
+                                class="position-relative ps-6 pe-3 py-2 d-flex align-items-sm-center mb-7">
+                                <div
+                                    class="position-absolute start-0 top-0 w-4px h-100 rounded-2 bg-warning">
+                                </div>
+                                <!--begin::Symbol-->
+                                <div class="symbol symbol-50px symbol-2by3 me-4">
+                                    <div class="symbol-label"
+                                        style="background-image: url(${groups.featuredImage})">
+                                    </div>
+                                </div>
+                                <!--end::Symbol-->
+                                <!--begin::Content-->
+                                <div class="d-flex flex-stack w-100">
+                                    <!--begin::Title-->
+                                    <div class="my-lg-0 my-2 me-2">
+                                        <a href="group-detail/${groups.id}"
+                                            class="text-gray-800 fw-bolder text-hover-primary fs-6">${groups.name}</a>
+                                        <span
+                                            class="text-gray-400 fw-bold d-block pt-1">Visibility: ${groups.visibility}</span>
+                                    </div>
+                                    <!--end::Title-->
+
+                                </div>
+                                <!--end::Content-->
+                            </div>
+                        </td>
+                        <td class="group_description">
+                            <div class="fs-7 text-muted fw-bolder">${groups.description}
+                            </div>
+                        </td>
+                        <td class="group_status">
+                            <span class="badge badge-light-success">${groups.status}</span>
+                        </td>
+                        <td class="groups_team">
+                            <!--begin::Team members-->
+                            <div id="groupMember${indexGroups}" class="symbol-group symbol-hover mb-1">
+
+                                <!--begin::Member-->
+                                <div class="symbol symbol-circle symbol-25px">
+                                    <div class="symbol-label bg-light-danger">
+                                        <span class="fs-7 text-danger">E</span>
+                                    </div>
+                                </div>
+                                <!--end::Member-->
+                                <!--begin::More members-->
+                                <div class="symbol symbol-circle symbol-25px">
+                                    <div class="symbol-label bg-dark">
+                                        <span class="fs-9 text-white">+0</span>
+                                    </div>
+                                </div>
+                                <!--end::More members-->
+                            </div>
+                            <!--end::Team members-->
+                            <div class="fs-7 fw-bolder text-muted">Team Members</div>
+                        </td>
+                        <td class="min-w-125px">
+                            <div class="d-grid gap-2 d-md-block">
+                                <button id="editGroupButton" class="btn btn-transparent p-2" type="button" data-bs-toggle="modal" data-bs-target="#kt_modal_edit_group" data-group-id="${groups.id}">
+                                    <img
+                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADWElEQVRYhc2XUWhbVRyHv/9J2ln2YBVd2gyhTVIsnTDwRceauiSCWHAPPoiob1OL6MCHzYeBessehDF8EYq4Z9mLiDgQxWR1hcn2oIg6F4hEmaxN0CqyrVCk5+dDb9K5Nultmqm/p3M49/6/j3vOufce+I9jt/RdJpMZ9d6POudikQqYfV+pVC53KhBvNNLp9H3AaUn7zQxJkQpIWgTu2Wgs+PSXu31PvAA24LCvgkLiy1YCDjgN7AeuAheBlYgC64oCBKVaHvSBwV0ghAhKC2dY0tPBE8mlxnUGkMlkxiRdAq5K2lOtVv+MAm+VoFh/FPMfC/qAOeBbsOdA/QYllnSwIeEAvPej4b0XuwoXM9P5gQPThcHD5vw+EwuCAn32YRDINQVuWnCRHntkeGHgFcwEEOSSZWLKAzUZj5FdeLEp0I20gzevySXLkr262rODXROIAm/G6XrY6u2KwFbgx4r1hImTAN6sBDe9B/4NeI/5s8Aosm/+WL729rYEgtL8BPiPBH2GnQoKiZbw4LPaLpkvAmNA2WLu8XcmR5ahwylYhdsngp2GnQryiam28LhKwANA2VwsF+R21RrjWxboJnzLAt2Gb0mgU7jB5VbwyAJvfFF7AdnnHnYiZtrBjxXrCcU1G8K/W+7hkVbwyAK2wkkZvcCl6cLA4QhbbSyEF96aGPy1Xe1NBYJAztAOAIM9wWx9BunWH5mO4JEE/to3v1uww9CiwQ1JU2+eXXiv8TUDCGZ/6u8EHkmgJx4bWW3ZD6BJgxtgzzOxJrGiO/ZGhQ8PD2fT6fS7Q0ND/ZEEMJ8BkKgEheQcaBK4LtmhhsTx/OA5b36c5d7xTefcuZeBKedcHqK8ir1lMMD4/fXifBZzGcmfcbKnhB2ybC0DHDie331+01qhQygSiyQgsxEQwBFndkQShtFYhoL7I4I3zKYCZtQlMFgEfhRWManizSoe6vElf+G2CgS5xEuvnf/t6Inxe69tB9RWwHu/YmYA6w8jZjoB3YTHQqaHtQVRDgcfSqVSd3YR9o+EW+/hsHsF1o5mLp1OnwPGgXngAtv8Q94gsRCelDRXrVZzgG+sAQ88A7wPZIEnuwxvRtKcc+7ZkLn+cJpKpR50zg3fDrb3/udqtfp1A/6/yN+YYbjrot53XgAAAABJRU5ErkJggg==">
+                                </button>
+                                <button id="deleteGroup" class="btn btn-transparent p-2"
+                                    type="button" data-group-id="${groups.id}"><img
+                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADp0lEQVRYhc2X32ubVRjHP8+bbEtNdS2zorlpm5OklUCsFAXZnLqq+C94I/PCi13o9ZAxIojCQLzxQnajBS+m4rU3Zm5uzEGFsWJUurxNLFVLW9iwXdcmb87jRd7YvG1+tSno9yYn53yf5/nmeU6ecw78x5C9kIeHh58Ih8MTItLfbF1V16vV6q1SqbR04AISicR7qnoWONyBWhaRDwuFQvbABBhjTgOfAR6QA/5uQX0EmALCwGnXdac7+Q53IwB4G0BE3iwUCl90EPsGMA2843+2hdOJMD4+fgyYAB4AX3fiRyKRS8AG8HQqlXq0ZwHlcvlFn3ejUChsdeLn8/kycBMQz/NOduLvKoEx5riqfgBMiki0YelqJ2cNuAKcEpFvjDGo6n0R+Ql413XdG43EQAaMMceBqyJyckfwVWvtV91G97mr9e++rxeAHxKJxHMtDY0xV4wxGo/HP8pkMtGWxD0ik8lEE4nEx8YYNcb82LgW+BvG4/F1EYlGo9H+2dnZ+wclACCdTvdvbm6uAWXXdY/U5wMlqKf9oIMD5PP5dX8YaGQ7N+GfQGx0dPRbx3FSO8k9oAzc8cd/tBSgqudE5KLjOK8dUOBGxKl10nONk7tacSqVilcqldcdx3kf+EtELvUaWVXXVfV2OBy+NTc3N99WAMDIyMh4KBT6FZhzXXesl+DGmC+BpyKRSMZvUgE0PQs8z1sOhUIAQ70E9/EqMLC2thalthcCaNqKFxcX71Kr18Dk5OShxrWz134fzOaWTqG6nT1VOX95aSr7fXGgkZtOpw8DR4HKwsLCvWaxWp0FSq2TyerqauBAOVI+dEHRXDa3PFWfO59bfllUv8P2XWjkViqVIWplXvF9di0A3wjHcQJlEOQogBU7uD1p/V+ugQyo6hCAiKy0CtJRgIg81obTFp7nDflC9i+AHjaiiNRt9yVgeYcT3ysWwBGt/uvEHytUCaJuu9wqSLsrWfMMVPUTHLn7oBrJbYvauoxGPrViA9e1bjLQUoCqrojILgHZV2LXgeuBuZdG7wFnmrip75/9l0BVY204baGqj+9bgLX2FwARORGLxR7aa/BMJhMVked9IT/vWUCpVPoNmAEG+/r6Pk+n001fQ80wNjb28MbGxjQwANycn5+/04rb9mGSTCYnrLXXgH5qnXEGWG9n43OfBY4Ba9baE8VicXZfAhpEXASe6cTdgRlr7VvFYvF2O1LXb8NkMvmkqnZzS9ryPG/OL+H/H/8AzDJIFzqAtQMAAAAASUVORK5CYII="></button>
+                            </div>
+                        </td>
+                    </tr>`;
+
+                    $("#all_groups_listing tbody").append($(table_row));
+
+                    $.each(groups.members, function(indexmembers, member) {
+                        //console.log(indexmembers);
+                        if (indexmembers === 4) {
+                            return false;
+                        }
+                        var memberRow = `<div class="symbol symbol-circle symbol-25px">
+                                             <img src="${member.profilePhoto}" alt="" />
+                                         </div>`;
+                        $("#groupMember" + indexGroups).prepend(memberRow);
+
+                    });
+                });
+            });
+        }
+        groupListings(1);
+
+        //Approved group listing
+        function ApprovedgroupListings(nextPage) {
+            $('#approved_groups_listing tbody tr').remove();
+            var settings = {
+                "url": "{{ env('API_URL') }}groups",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    query: "query{\n  groups(perPage:10, pageNo:" + nextPage +
+                        "){\n    firstPage\n    hasNext\n    nextPage\n    page\n    prevPage\n    list {\n      id\n     name\n   badge {\n        id\n        image\n        order\n        video\n      }\n      category {\n        id\n        name\n        published\n      }\n      description\n      featuredImage\n      id\n      members {\n        id\n        bio\n        email\n        fullname\n        groupId\n        phone\n        profilePhoto\n        role\n        selfieImg\n        status\n        userId\n        \n      }\n      status\n      visibility\n      \n    }\n  }\n}\n",
+                    variables: {}
+                })
+            };
+
+            $.ajax(settings).done(function(response) {
+                console.log(response.data.groups);
+                var approved_pages =
+                    `  <li id="approved_prevPage" class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" onclick="ApprovedgroupListings(${response.data.groups.prevPage});">Previous</a></li>
+                                    <li id="approved_currentPage" class="page-item"><a class="page-link" href="#">${response.data.groups.page}</a></li>
+                                    <li id="approved_hasNext" class="page-item"><a class="page-link" onclick="ApprovedgroupListings(${response.data.groups.nextPage});" href="#">Next</a></li>`;
+                $('#approved_pagination').html(approved_pages);
+
+                if (response.data.groups.prevPage > 0) {
+                    console.log(response.data.groups.prevPage);
+                    $('#approved_prevPage').removeClass("disabled");
+                }
+
+                if (response.data.groups.hasNext == false) {
+                    $('#approved_hasNext').addClass("disabled");
+                }
+                $.each(response.data.groups.list, function(indexGroups, groups) {
+                    /// do stuff
+                    //console.log(groups);
+                    var table_row = `<tr>
+                        <td class="group_name">
+
+                            <div
+                                class="position-relative ps-6 pe-3 py-2 d-flex align-items-sm-center mb-7">
+                                <div
+                                    class="position-absolute start-0 top-0 w-4px h-100 rounded-2 bg-warning">
+                                </div>
+                                <!--begin::Symbol-->
+                                <div class="symbol symbol-50px symbol-2by3 me-4">
+                                    <div class="symbol-label"
+                                        style="background-image: url(${groups.featuredImage})">
+                                    </div>
+                                </div>
+                                <!--end::Symbol-->
+                                <!--begin::Content-->
+                                <div class="d-flex flex-stack w-100">
+                                    <!--begin::Title-->
+                                    <div class="my-lg-0 my-2 me-2">
+                                        <a href="group-detail/${groups.id}"
+                                            class="text-gray-800 fw-bolder text-hover-primary fs-6">${groups.name}</a>
+                                        <span
+                                            class="text-gray-400 fw-bold d-block pt-1">Visibility: ${groups.visibility}</span>
+                                    </div>
+                                    <!--end::Title-->
+
+                                </div>
+                                <!--end::Content-->
+                            </div>
+                        </td>
+                        <td class="group_description">
+                            <div class="fs-7 text-muted fw-bolder">${groups.description}
+                            </div>
+                        </td>
+                        <td class="group_status">
+                            <span class="badge badge-light-success">${groups.status}</span>
+                        </td>
+                        <td class="groups_team">
+                            <!--begin::Team members-->
+                            <div id="app_groupMember${indexGroups}" class="symbol-group symbol-hover mb-1">
+
+                                <!--begin::Member-->
+                                <div class="symbol symbol-circle symbol-25px">
+                                    <div class="symbol-label bg-light-danger">
+                                        <span class="fs-7 text-danger">E</span>
+                                    </div>
+                                </div>
+                                <!--end::Member-->
+                                <!--begin::More members-->
+                                <div class="symbol symbol-circle symbol-25px">
+                                    <div class="symbol-label bg-dark">
+                                        <span class="fs-9 text-white">+0</span>
+                                    </div>
+                                </div>
+                                <!--end::More members-->
+                            </div>
+                            <!--end::Team members-->
+                            <div class="fs-7 fw-bolder text-muted">Team Members</div>
+                        </td>
+                        <td class="min-w-125px">
+                            <div class="d-grid gap-2 d-md-block">
+                                <button class="btn btn-transparent p-2" type="button">
+                                    <img
+                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADWElEQVRYhc2XUWhbVRyHv/9J2ln2YBVd2gyhTVIsnTDwRceauiSCWHAPPoiob1OL6MCHzYeBessehDF8EYq4Z9mLiDgQxWR1hcn2oIg6F4hEmaxN0CqyrVCk5+dDb9K5Nultmqm/p3M49/6/j3vOufce+I9jt/RdJpMZ9d6POudikQqYfV+pVC53KhBvNNLp9H3AaUn7zQxJkQpIWgTu2Wgs+PSXu31PvAA24LCvgkLiy1YCDjgN7AeuAheBlYgC64oCBKVaHvSBwV0ghAhKC2dY0tPBE8mlxnUGkMlkxiRdAq5K2lOtVv+MAm+VoFh/FPMfC/qAOeBbsOdA/QYllnSwIeEAvPej4b0XuwoXM9P5gQPThcHD5vw+EwuCAn32YRDINQVuWnCRHntkeGHgFcwEEOSSZWLKAzUZj5FdeLEp0I20gzevySXLkr262rODXROIAm/G6XrY6u2KwFbgx4r1hImTAN6sBDe9B/4NeI/5s8Aosm/+WL729rYEgtL8BPiPBH2GnQoKiZbw4LPaLpkvAmNA2WLu8XcmR5ahwylYhdsngp2GnQryiam28LhKwANA2VwsF+R21RrjWxboJnzLAt2Gb0mgU7jB5VbwyAJvfFF7AdnnHnYiZtrBjxXrCcU1G8K/W+7hkVbwyAK2wkkZvcCl6cLA4QhbbSyEF96aGPy1Xe1NBYJAztAOAIM9wWx9BunWH5mO4JEE/to3v1uww9CiwQ1JU2+eXXiv8TUDCGZ/6u8EHkmgJx4bWW3ZD6BJgxtgzzOxJrGiO/ZGhQ8PD2fT6fS7Q0ND/ZEEMJ8BkKgEheQcaBK4LtmhhsTx/OA5b36c5d7xTefcuZeBKedcHqK8ir1lMMD4/fXifBZzGcmfcbKnhB2ybC0DHDie331+01qhQygSiyQgsxEQwBFndkQShtFYhoL7I4I3zKYCZtQlMFgEfhRWManizSoe6vElf+G2CgS5xEuvnf/t6Inxe69tB9RWwHu/YmYA6w8jZjoB3YTHQqaHtQVRDgcfSqVSd3YR9o+EW+/hsHsF1o5mLp1OnwPGgXngAtv8Q94gsRCelDRXrVZzgG+sAQ88A7wPZIEnuwxvRtKcc+7ZkLn+cJpKpR50zg3fDrb3/udqtfp1A/6/yN+YYbjrot53XgAAAABJRU5ErkJggg==">
+                                </button>
+                                <button class="btn btn-transparent p-2"
+                                    type="button"><img
+                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADp0lEQVRYhc2X32ubVRjHP8+bbEtNdS2zorlpm5OklUCsFAXZnLqq+C94I/PCi13o9ZAxIojCQLzxQnajBS+m4rU3Zm5uzEGFsWJUurxNLFVLW9iwXdcmb87jRd7YvG1+tSno9yYn53yf5/nmeU6ecw78x5C9kIeHh58Ih8MTItLfbF1V16vV6q1SqbR04AISicR7qnoWONyBWhaRDwuFQvbABBhjTgOfAR6QA/5uQX0EmALCwGnXdac7+Q53IwB4G0BE3iwUCl90EPsGMA2843+2hdOJMD4+fgyYAB4AX3fiRyKRS8AG8HQqlXq0ZwHlcvlFn3ejUChsdeLn8/kycBMQz/NOduLvKoEx5riqfgBMiki0YelqJ2cNuAKcEpFvjDGo6n0R+Ql413XdG43EQAaMMceBqyJyckfwVWvtV91G97mr9e++rxeAHxKJxHMtDY0xV4wxGo/HP8pkMtGWxD0ik8lEE4nEx8YYNcb82LgW+BvG4/F1EYlGo9H+2dnZ+wclACCdTvdvbm6uAWXXdY/U5wMlqKf9oIMD5PP5dX8YaGQ7N+GfQGx0dPRbx3FSO8k9oAzc8cd/tBSgqudE5KLjOK8dUOBGxKl10nONk7tacSqVilcqldcdx3kf+EtELvUaWVXXVfV2OBy+NTc3N99WAMDIyMh4KBT6FZhzXXesl+DGmC+BpyKRSMZvUgE0PQs8z1sOhUIAQ70E9/EqMLC2thalthcCaNqKFxcX71Kr18Dk5OShxrWz134fzOaWTqG6nT1VOX95aSr7fXGgkZtOpw8DR4HKwsLCvWaxWp0FSq2TyerqauBAOVI+dEHRXDa3PFWfO59bfllUv8P2XWjkViqVIWplXvF9di0A3wjHcQJlEOQogBU7uD1p/V+ugQyo6hCAiKy0CtJRgIg81obTFp7nDflC9i+AHjaiiNRt9yVgeYcT3ysWwBGt/uvEHytUCaJuu9wqSLsrWfMMVPUTHLn7oBrJbYvauoxGPrViA9e1bjLQUoCqrojILgHZV2LXgeuBuZdG7wFnmrip75/9l0BVY204baGqj+9bgLX2FwARORGLxR7aa/BMJhMVked9IT/vWUCpVPoNmAEG+/r6Pk+n001fQ80wNjb28MbGxjQwANycn5+/04rb9mGSTCYnrLXXgH5qnXEGWG9n43OfBY4Ba9baE8VicXZfAhpEXASe6cTdgRlr7VvFYvF2O1LXb8NkMvmkqnZzS9ryPG/OL+H/H/8AzDJIFzqAtQMAAAAASUVORK5CYII="></button>
+                            </div>
+                        </td>
+                    </tr>`;
+
+
+                    if (groups.status == "approved") {
+                        $("#approved_groups_listing tbody").append($(table_row));
+                    }
+
+                    $.each(groups.members, function(indexmembers, member) {
+                        //console.log(indexmembers);
+                        if (indexmembers === 4) {
+                            return false;
+                        }
+                        var app_memberRow = `<div class="symbol symbol-circle symbol-25px">
+                                             <img src="${member.profilePhoto}" alt="" />
+                                         </div>`;
+                        $("#app_groupMember" + indexGroups).prepend(app_memberRow);
+
+                    });
+
+                });
+            });
+        }
+        ApprovedgroupListings(1);
+
+        //pending form listing...
+        function PendinggroupListings(nextPage) {
+            $('#pending_groups_listing tbody tr').remove();
+            var settings = {
+                "url": "{{ env('API_URL') }}groups",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    query: "query{\n  groups(perPage:10, pageNo:" + nextPage +
+                        "){\n    firstPage\n    hasNext\n    nextPage\n    page\n    prevPage\n    list {\n      id\n     name\n   badge {\n        id\n        image\n        order\n        video\n      }\n      category {\n        id\n        name\n        published\n      }\n      description\n      featuredImage\n      id\n      members {\n        id\n        bio\n        email\n        fullname\n        groupId\n        phone\n        profilePhoto\n        role\n        selfieImg\n        status\n        userId\n        \n      }\n      status\n      visibility\n      \n    }\n  }\n}\n",
+                    variables: {}
+                })
+            };
+
+            $.ajax(settings).done(function(response) {
+                console.log(response.data.groups);
+                var pending_pages =
+                    `  <li id="pending_prevPage" class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" onclick="PendinggroupListings(${response.data.groups.prevPage});">Previous</a></li>
+                                    <li id="pending_currentPage" class="page-item"><a class="page-link" href="#">${response.data.groups.page}</a></li>
+                                    <li id="pending_hasNext" class="page-item"><a class="page-link" onclick="PendinggroupListings(${response.data.groups.nextPage});" href="#">Next</a></li>`;
+                $('#pending_pagination').html(pending_pages);
+
+                if (response.data.groups.prevPage > 0) {
+                    console.log(response.data.groups.prevPage);
+                    $('#pending_prevPage').removeClass("disabled");
+                }
+
+                if (response.data.groups.hasNext == false) {
+                    $('#pending_hasNext').addClass("disabled");
+                }
+                $.each(response.data.groups.list, function(indexGroups, groups) {
+                    /// do stuff
+                    //console.log(groups);
+                    var table_row = `<tr>
+                        <td class="group_name">
+
+                            <div
+                                class="position-relative ps-6 pe-3 py-2 d-flex align-items-sm-center mb-7">
+                                <div
+                                    class="position-absolute start-0 top-0 w-4px h-100 rounded-2 bg-warning">
+                                </div>
+                                <!--begin::Symbol-->
+                                <div class="symbol symbol-50px symbol-2by3 me-4">
+                                    <div class="symbol-label"
+                                        style="background-image: url(${groups.featuredImage})">
+                                    </div>
+                                </div>
+                                <!--end::Symbol-->
+                                <!--begin::Content-->
+                                <div class="d-flex flex-stack w-100">
+                                    <!--begin::Title-->
+                                    <div class="my-lg-0 my-2 me-2">
+                                        <a href="group-detail/${groups.id}"
+                                            class="text-gray-800 fw-bolder text-hover-primary fs-6">${groups.name}</a>
+                                        <span
+                                            class="text-gray-400 fw-bold d-block pt-1">Visibility: ${groups.visibility}</span>
+                                    </div>
+                                    <!--end::Title-->
+
+                                </div>
+                                <!--end::Content-->
+                            </div>
+                        </td>
+                        <td class="group_description">
+                            <div class="fs-7 text-muted fw-bolder">${groups.description}
+                            </div>
+                        </td>
+                        <td class="group_status">
+                            <span class="badge badge-light-success">${groups.status}</span>
+                        </td>
+                        <td class="groups_team">
+                            <!--begin::Team members-->
+                            <div id="pen_groupMember${indexGroups}" class="symbol-group symbol-hover mb-1">
+                              <!--begin::Member-->
+                                <div class="symbol symbol-circle symbol-25px">
+                                    <div class="symbol-label bg-light-danger">
+                                        <span class="fs-7 text-danger">E</span>
+                                    </div>
+                                </div>
+                                <!--end::Member-->
+                                <!--begin::More members-->
+                                <div class="symbol symbol-circle symbol-25px">
+                                    <div class="symbol-label bg-dark">
+                                        <span class="fs-9 text-white">+0</span>
+                                    </div>
+                                </div>
+                                <!--end::More members-->
+                            </div>
+                            <!--end::Team members-->
+                            <div class="fs-7 fw-bolder text-muted">Team Members</div>
+                        </td>
+                        <td class="min-w-125px">
+                            <div class="d-grid gap-2 d-md-block">
+                                <button class="btn btn-transparent p-2" type="button">
+                                    <img
+                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADWElEQVRYhc2XUWhbVRyHv/9J2ln2YBVd2gyhTVIsnTDwRceauiSCWHAPPoiob1OL6MCHzYeBessehDF8EYq4Z9mLiDgQxWR1hcn2oIg6F4hEmaxN0CqyrVCk5+dDb9K5Nultmqm/p3M49/6/j3vOufce+I9jt/RdJpMZ9d6POudikQqYfV+pVC53KhBvNNLp9H3AaUn7zQxJkQpIWgTu2Wgs+PSXu31PvAA24LCvgkLiy1YCDjgN7AeuAheBlYgC64oCBKVaHvSBwV0ghAhKC2dY0tPBE8mlxnUGkMlkxiRdAq5K2lOtVv+MAm+VoFh/FPMfC/qAOeBbsOdA/QYllnSwIeEAvPej4b0XuwoXM9P5gQPThcHD5vw+EwuCAn32YRDINQVuWnCRHntkeGHgFcwEEOSSZWLKAzUZj5FdeLEp0I20gzevySXLkr262rODXROIAm/G6XrY6u2KwFbgx4r1hImTAN6sBDe9B/4NeI/5s8Aosm/+WL729rYEgtL8BPiPBH2GnQoKiZbw4LPaLpkvAmNA2WLu8XcmR5ahwylYhdsngp2GnQryiam28LhKwANA2VwsF+R21RrjWxboJnzLAt2Gb0mgU7jB5VbwyAJvfFF7AdnnHnYiZtrBjxXrCcU1G8K/W+7hkVbwyAK2wkkZvcCl6cLA4QhbbSyEF96aGPy1Xe1NBYJAztAOAIM9wWx9BunWH5mO4JEE/to3v1uww9CiwQ1JU2+eXXiv8TUDCGZ/6u8EHkmgJx4bWW3ZD6BJgxtgzzOxJrGiO/ZGhQ8PD2fT6fS7Q0ND/ZEEMJ8BkKgEheQcaBK4LtmhhsTx/OA5b36c5d7xTefcuZeBKedcHqK8ir1lMMD4/fXifBZzGcmfcbKnhB2ybC0DHDie331+01qhQygSiyQgsxEQwBFndkQShtFYhoL7I4I3zKYCZtQlMFgEfhRWManizSoe6vElf+G2CgS5xEuvnf/t6Inxe69tB9RWwHu/YmYA6w8jZjoB3YTHQqaHtQVRDgcfSqVSd3YR9o+EW+/hsHsF1o5mLp1OnwPGgXngAtv8Q94gsRCelDRXrVZzgG+sAQ88A7wPZIEnuwxvRtKcc+7ZkLn+cJpKpR50zg3fDrb3/udqtfp1A/6/yN+YYbjrot53XgAAAABJRU5ErkJggg==">
+                                </button>
+                                <button class="btn btn-transparent p-2"
+                                    type="button"><img
+                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADp0lEQVRYhc2X32ubVRjHP8+bbEtNdS2zorlpm5OklUCsFAXZnLqq+C94I/PCi13o9ZAxIojCQLzxQnajBS+m4rU3Zm5uzEGFsWJUurxNLFVLW9iwXdcmb87jRd7YvG1+tSno9yYn53yf5/nmeU6ecw78x5C9kIeHh58Ih8MTItLfbF1V16vV6q1SqbR04AISicR7qnoWONyBWhaRDwuFQvbABBhjTgOfAR6QA/5uQX0EmALCwGnXdac7+Q53IwB4G0BE3iwUCl90EPsGMA2843+2hdOJMD4+fgyYAB4AX3fiRyKRS8AG8HQqlXq0ZwHlcvlFn3ejUChsdeLn8/kycBMQz/NOduLvKoEx5riqfgBMiki0YelqJ2cNuAKcEpFvjDGo6n0R+Ql413XdG43EQAaMMceBqyJyckfwVWvtV91G97mr9e++rxeAHxKJxHMtDY0xV4wxGo/HP8pkMtGWxD0ik8lEE4nEx8YYNcb82LgW+BvG4/F1EYlGo9H+2dnZ+wclACCdTvdvbm6uAWXXdY/U5wMlqKf9oIMD5PP5dX8YaGQ7N+GfQGx0dPRbx3FSO8k9oAzc8cd/tBSgqudE5KLjOK8dUOBGxKl10nONk7tacSqVilcqldcdx3kf+EtELvUaWVXXVfV2OBy+NTc3N99WAMDIyMh4KBT6FZhzXXesl+DGmC+BpyKRSMZvUgE0PQs8z1sOhUIAQ70E9/EqMLC2thalthcCaNqKFxcX71Kr18Dk5OShxrWz134fzOaWTqG6nT1VOX95aSr7fXGgkZtOpw8DR4HKwsLCvWaxWp0FSq2TyerqauBAOVI+dEHRXDa3PFWfO59bfllUv8P2XWjkViqVIWplXvF9di0A3wjHcQJlEOQogBU7uD1p/V+ugQyo6hCAiKy0CtJRgIg81obTFp7nDflC9i+AHjaiiNRt9yVgeYcT3ysWwBGt/uvEHytUCaJuu9wqSLsrWfMMVPUTHLn7oBrJbYvauoxGPrViA9e1bjLQUoCqrojILgHZV2LXgeuBuZdG7wFnmrip75/9l0BVY204baGqj+9bgLX2FwARORGLxR7aa/BMJhMVked9IT/vWUCpVPoNmAEG+/r6Pk+n001fQ80wNjb28MbGxjQwANycn5+/04rb9mGSTCYnrLXXgH5qnXEGWG9n43OfBY4Ba9baE8VicXZfAhpEXASe6cTdgRlr7VvFYvF2O1LXb8NkMvmkqnZzS9ryPG/OL+H/H/8AzDJIFzqAtQMAAAAASUVORK5CYII="></button>
+                            </div>
+                        </td>
+                    </tr>`;
+
+
+                    if (groups.status == "pending") {
+                        $("#pending_groups_listing tbody").append($(table_row));
+                    }
+                    $.each(groups.members, function(indexmembers, member) {
+                        //console.log(indexmembers);
+                        if (indexmembers === 4) {
+                            return false;
+                        }
+                        var pen_memberRow = `<div class="symbol symbol-circle symbol-25px">
+                                             <img src="${member.profilePhoto}" alt="" />
+                                         </div>`;
+                        $("#pen_groupMember" + indexGroups).prepend(pen_memberRow);
+
+                    });
+                });
+            });
+        }
+        PendinggroupListings(1);
+    </script>
+    <script>
+        $("#wizard").steps({
+            headerTag: "h2",
+            bodyTag: "section",
+            transitionEffect: "slideLeft",
+            onStepChanging: function(event, currentIndex, newIndex) {
+
+
+                if (currentIndex == 0) {
+                    //I suppose 0 is the first step
+
+
+
+                    return true;
+                }
+
+                if (currentIndex == 1) {
+                    //I suppose 0 is the first step
+                    return true;
+                }
+                if (currentIndex == 2) {
+                    //I suppose 0 is the first step
+                    var badges = $("#badges").val();
+
+                    //console.log(badges);
+                    var groupImg = $(".image-input-wrapper").css('background-image');
+                    groupImg = groupImg.replace('url(', '').replace(')', '').replace(/\"/gi, "");
+                    var group_title = $("#group_title").val();
+                    var details_description = $("#details_description").val();
+                    var group_category = $("#group_category").val();
+                    var group_privacy = $('input[name="group_privacy"]:checked').val();
+
+                    var settings = {
+                        "url": "{{ env('API_URL') }}groups",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": JSON.stringify({
+                            query: "mutation{\n  createGroup(\n    badgeId:\"" + badges +
+                                "\",\n    categoryId:" +
+                                group_category +
+                                ",\n    createdBy:\"admin\",\n    description:\"" +
+                                details_description + "\",\n    featuredImage:\"" +
+                                groupImg +
+                                "\"\n    name:\"" + group_title +
+                                "\",\n    status:\"approved\",\n    userId:\"f5e236f0-c33c-456e-98e7-90808fe41312\",\n    visibility:\"" +
+                                group_privacy +
+                                "\"\n  ) {\n    id\n    badgeId\n    category {\n      id\n      name\n      published\n    }\n    description\n    featuredImage\n    members {\n      id\n      bio\n      email\n      fullname\n      groupId\n      phone\n      profilePhoto\n      role\n      selfieImg\n      status\n      userId\n    }\n    name\n    status\n    visibility\n    \n  }\n  \n}",
+                            variables: {}
+                        })
+                    };
+
+                    $.ajax(settings).done(function(response) {
+                        alert("Group Successfully Created!");
+
+                    });
+
+                    //console.log(badges);
+                    return true;
+                }
+                if (currentIndex == 3) {
+
+                    return true;
+                }
+
+            },
+        });
+        $(".question_container").delegate('#add_more_options', 'click', function(e) {
+            e.preventDefault();
+            var option = `<div class="col-md-3">
+                            <div class="mb-1 fv-row">
+                                <label class="required form-label mb-1">Option</label>
+                                <input type="text" class="form-control form-control-lg form-control-solid" name="options[]" placeholder="" value="">
+                                <div class="icon_delete">x</div>
+                            </div>
+                        </div>`;
+
+
+            $(this).parent('div').parent('div').find("#q_type_option").append(option);
+
+
+        });
+        $("body").delegate('.icon_delete', 'click', function(e) {
+            e.preventDefault();
+            $(this).parent('div').parent('div').remove();
+        });
+
+        function add_more_question() {
+            var question = `<div class="questions mt-4" style="border-top:2px solid #fd466c">
+                                <div class="mb-1 fv-row mt-4">
+                                    <label class="required form-label mb-1">Question
+                                        Description</label>
+                                        <button type="button"
+                                            style="top: -14px;right: 10px;padding: 2px 10px;"
+                                            class="float-end mb-4 btn btn-primary"
+                                            id="add_more_options">
+                                            <i class="fa fa-plus mr-2"></i> Add Option
+                                        </button>
+                                        <div class="icon_delete_question">x</div>
+                                    <input type="text" class="form-control form-control-lg form-control-solid" name="q_title" placeholder="" value="">
+                                </div>
+                                <div class="row mt-4" id="q_type_option">
+                                    <div class="col-md-3">
+                                        <div class="mb-1 fv-row">
+                                            <label class="required form-label mb-1">Option</label>
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="options[]" placeholder="" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-1 fv-row">
+                                            <label class="required form-label mb-1">Option</label>
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="options[]" placeholder="" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+            $(".question_container").append(question);
+        }
+
+        $(".question_container").delegate('.icon_delete_question', 'click', function(e) {
+            e.preventDefault();
+            $(this).parent('div').parent('div').remove(); //Remove field html
+        });
+
+        //Call API for delete group
+
+
+        $("body").delegate("#deleteGroup", "click", function() {
+            //alert("clicked");
+            var id = $(this).attr('data-group-id');
+            if (confirm("Are you sure you want to delete this?")) {
+                alert(id)
+            } else {
+                return false;
+            }
+        });
+
+        //Edit group
+        $("body").delegate("#editGroupButton", "click", function() {
+            //alert("clicked");
+            var id = $(this).attr('data-group-id');
+            //alert(id);
+            var settings = {
+                "url": "{{ env('API_URL') }}groups",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    query: "query{\n  group(id:\"" + id +
+                        "\"){\n    category {\n      id\n      name\n      published\n    }\n    description\n    featuredImage\n    name\n    id\n    visibility\n    status\n    \n  }\n}",
+                    variables: {}
+                })
+            };
+
+            $.ajax(settings).done(function(response) {
+                //console.log(response.data.group);
+                $("#editGroupContainer form").remove();
+                var editPopups = `<form id="editGroup" method="post" action="{{ url('editGroup') }}">
+                            @csrf
+                            <input type="hidden" name="GroupIMGEdit" id="GroupIMGEdit"/>
+                            <input type="hidden" name="groupId" id="groupId" value="${response.data.group.id}"/>
+                            <div class="current" data-kt-stepper-element="content">
+                                <!--begin::Wrapper-->
+                                <div class="w-100">
+                                    <!--begin::Heading-->
+                                    <div class="pb-10 pb-lg-10">
+                                        <h2 class="fw-bolder d-flex align-items-center text-dark">Setup Group Details
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                title="Campaign name will be used as reference within your campaign reports"></i>
+                                        </h2>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Label-->
+                                                <label class="d-block fw-bold fs-6 mb-5">
+                                                    <span class="required">Group Image</span>
+                                                    <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                        data-bs-toggle="tooltip"
+                                                        title="E.g. Select a logo to represent the company that's running the campaign."></i>
+                                                </label>
+                                                <!--end::Label-->
+                                                <!--begin::Image input-->
+                                                <div class="image-input image-input-empty image-input-outline"
+                                                    data-kt-image-input="true"
+                                                    style="background-image: url(${response.data.group.featuredImage})">
+                                                    <!--begin::Preview existing avatar-->
+                                                    <div id="SetgroupIMG"
+                                                        class="image-input-wrapper w-150px h-150px"></div>
+                                                    <!--end::Preview existing avatar-->
+                                                    <!--begin::Label-->
+                                                    <label
+                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                                        title="Change avatar">
+                                                        <i class="bi bi-pencil-fill fs-7"></i>
+                                                        <!--begin::Inputs-->
+                                                        <input type="file" name="avatar"
+                                                            accept=".png, .jpg, .jpeg" onchange="encodeBase64(this)" />
+                                                        <input type="hidden" name="avatar_remove" />
+                                                        <!--end::Inputs-->
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Cancel-->
+                                                    <span
+                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                        data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
+                                                        title="Cancel avatar">
+                                                        <i class="bi bi-x fs-2"></i>
+                                                    </span>
+                                                    <!--end::Cancel-->
+                                                    <!--begin::Remove-->
+                                                    <span
+                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                        data-kt-image-input-action="remove" data-bs-toggle="tooltip"
+                                                        title="Remove avatar">
+                                                        <i class="bi bi-x fs-2"></i>
+                                                    </span>
+                                                    <!--end::Remove-->
+                                                </div>
+                                                <!--end::Image input-->
+                                                <!--begin::Hint-->
+                                                <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                                                <!--end::Hint-->
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-6 fv-row">
+                                                <!--begin::Label-->
+                                                <label class="required form-label mb-3">Group Title</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" id="group_title"
+                                                    class="form-control form-control-lg form-control-solid"
+                                                    name="group_title" placeholder="" value="${response.data.group.name}" />
+                                                <!--end::Input-->
+                                            </div>
+                                            <div class="fv-row">
+                                                <!--begin::Label-->
+                                                <label class="fs-6 fw-bold mb-2">Group Description</label>
+                                                <!--end::Label-->
+                                                <!--begin::Label-->
+                                                <textarea id="details_description" class="form-control form-control-solid" rows="3"
+                                                    placeholder="Enter Deal Description" name="details_description">${response.data.group.description}</textarea>
+                                                <!--end::Label-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="fv-row mb-6">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-bold mb-2">Select Category</label>
+                                        <!--end::Label-->
+
+                                        <!--begin::Input-->
+                                        <select name="group_category" class="form-select form-select-solid"
+                                            id="group_category_list" data-placeholder="Select an option"
+                                            name="details_customer">
+                                            <option value="${response.data.group.category.id}" selected>${response.data.group.category.name}</option>
+
+                                        </select>
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--begin::Input group-->
+                                    <div class="fv-row mb-8">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-bold mb-2">Group Privacy
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                title="Show your ads to either men or women, or select 'All' for both"></i></label>
+                                        <!--End::Label-->
+                                        <!--begin::Row-->
+                                        <div class="row g-9" data-kt-buttons="true"
+                                            data-kt-buttons-target="[data-kt-button='true']">
+                                            <!--begin::Col-->
+                                            <div class="col">
+                                                <!--begin::Option-->
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-outline-default active d-flex text-start p-6"
+                                                    data-kt-button="true">
+                                                    <!--begin::Radio-->
+                                                    <span
+                                                        class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                                                        <input id="group_privacy" class="form-check-input" type="radio"
+                                                            name="group_privacy" value="Public" checked="checked" />
+                                                    </span>
+                                                    <!--end::Radio-->
+                                                    <!--begin::Info-->
+                                                    <span class="ms-5">
+                                                        <span class="fs-4 fw-bolder text-gray-800 d-block">Public</span>
+                                                    </span>
+                                                    <!--end::Info-->
+                                                </label>
+                                                <!--end::Option-->
+                                            </div>
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col">
+                                                <!--begin::Option-->
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
+                                                    data-kt-button="true">
+                                                    <!--begin::Radio-->
+                                                    <span
+                                                        class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                                                        <input id="group_privacy" class="form-check-input" type="radio"
+                                                            name="group_privacy" value="Private" />
+                                                    </span>
+                                                    <!--end::Radio-->
+                                                    <!--begin::Info-->
+                                                    <span class="ms-5">
+                                                        <span class="fs-4 fw-bolder text-gray-800 d-block">Private</span>
+                                                    </span>
+                                                    <!--end::Info-->
+                                                </label>
+                                                <!--end::Option-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Row-->
+                                    </div>
+                                    <!--end::Input group-->
+                                </div>
+                                <!--end::Wrapper-->
+                            </div>
+                            <button class="btn btn-primary fw-bolder btn-sm float-end" type="submit">Edit</button>
+
+                        </form>`;
+                $("#editGroupContainer").append(editPopups);
+
+                var settings = {
+                    "url": "{{ env('API_URL') }}groups",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                        query: "query{\n  categories(pageNo:1, perPage:100){\n    list {\n      id\n      name\n      published\n    }\n  }\n}",
+                        variables: {}
+                    })
+                };
+
+                $.ajax(settings).done(function(response) {
+                    //console.log(response.data.categories);
+                    $.each(response.data.categories.list, function(indexcat, category) {
+                        //console.log(category.name);
+                        var CatOption =
+                            `<option value="${category.id}">${category.name}</option>`;
+                        $("#group_category_list").append(CatOption);
+                    });
+
+                });
+            });
+        });
+
+        //imge convert
+        function encodeBase64(elm) {
+            var file = elm.files[0];
+            var imgReader = new FileReader();
+            imgReader.onloadend = function() {
+                console.log('Base64 Format', imgReader.result);
+                document.getElementById('SetgroupIMG').style.backgroundImage = "url(" + imgReader.result + ")";
+                document.getElementById("GroupIMGEdit").value = imgReader.result;
+            }
+            imgReader.readAsDataURL(file);
+        }
+    </script> {% endcomment %}
+    {% endblock %}

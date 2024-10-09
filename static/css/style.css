@@ -1,0 +1,63 @@
+
+.nav-pills .nav-link.active {
+    color: #000 !important;
+}
+.nav-item .active {
+    border-bottom: 3px solid #fe466c !important;
+}
+td.group_name {
+    min-width: 260px;
+}
+td.groups_team {
+    min-width: 155px;
+}
+td.group_description {
+    min-width: 250px;
+}
+td.group_status {
+    min-width: 125px;
+}
+.border-left-custom {
+    border-left: 6px solid red;
+}
+.icon_delete {
+    margin-top: -50px;
+    background: #fff;
+    padding: 1px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    margin-left: 192px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+}
+.icon_delete_question {
+    margin-top: -24px;
+    background: #fff;
+    padding: 1px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    margin-left: 160px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+}
+span.select2-selection.select2-selection--multiple.js-select2 {
+    background: #fff;
+    font-size: 16px;
+    padding: 9px;
+}
+#select2-sxua-container {
+    white-space: break-spaces;
+}
+span.select2-selection.select2-selection--multiple.js-select2 {
+    background: #fff;
+    font-size: 16px;
+    padding: 5px;
+    min-height: 49px;
+    padding-top: 10px !important;
+    border: 2px solid #f06445;
+    border-radius: 5px;
+}

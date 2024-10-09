@@ -1,0 +1,613 @@
+{% extends 'layouts/master.html' %}
+{% load static %} 
+
+
+{% block content %}
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="page d-flex flex-row flex-column-fluid">
+            <!--begin::Aside-->
+            <div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside"
+                data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
+                data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
+                data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+                <!--begin::Aside menu-->
+                {% include 'components/leftNavigationBar.html' %}
+                <!--end::Aside menu-->
+            </div>
+            <!--end::Aside-->
+            <!--begin::Wrapper-->
+            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                {% include 'components/header.html' with default_title="Badge" %}
+
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <!--begin::Container-->
+                    <div id="kt_content_container" class="container-fluid">
+                        <div class="row g-5 g-xxl-10">
+                            <div class="col-xl-12 mb-5 mb-xxl-10">
+                                <!--begin::Table Widget 3-->
+                                <div class="card card-flush h-xl-100">
+                                    <!--begin::Card header-->
+                                    <div class="card-header py-7 justify-content-end">
+
+                                        <!--begin::Create campaign button-->
+                                        <div class="">
+                                            <a href="#" type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#kt_modal_create_campaign">Create
+                                                Badge</a>
+                                        </div>
+                                        <!--end::Create campaign button-->
+                                    </div>
+                                    <!--end::Card header-->
+                                    <!--begin::Card body-->
+                                    <div class="tab-content card-body pt-1" id="pills-tabContent">
+
+                                        <!--begin::Seprator-->
+                                        <div class="separator separator-dashed my-5"></div>
+                                        <!--end::Seprator-->
+
+                                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                            aria-labelledby="pills-home-tab">
+                                            <!--begin::Table-->
+                                            <table id="all_groups_listing"
+                                                class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                                data-kt-table-widget-3="all">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Badge Name</th>
+                                                        <th>Image</th>
+                                                        <th>Video</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                   
+                                                        <tr>
+                                                            <td class="badge_name min-w-250px">
+                                                                <div
+                                                                    class="position-relative ps-6 pe-3 py-2 d-flex align-items-sm-center mb-7">
+
+                                                                    <!--begin::Content-->
+                                                                    <div class="d-flex flex-stack w-100">
+                                                                        <!--begin::Title-->
+                                                                        <a href="#"
+                                                                            class="text-gray-800 fw-bolder text-hover-primary fs-6">XYZ</a>
+
+                                                                        <!--end::Title-->
+
+                                                                    </div>
+                                                                    <!--end::Content-->
+                                                                </div>
+                                                            </td>
+                                                            <td class="group_description">
+                                                                <div class="symbol symbol-100px symbol-2by3 me-4">
+                                                                    <div class="symbol-label"
+                                                                        style="background-image: url('https://cdn.pixabay.com/photo/2022/12/18/11/45/christmas-7663229_960_720.jpg')">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="group_status">
+                                                                <video width="150" height="100"
+                                                                    style="border-radius: 6px;" controls>
+                                                                    <source src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0" type="video/mp4">
+                                                                    <source src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0" type="video/ogg">
+                                                                    Your browser does not support the video tag.
+                                                                </video>
+                                                            </td>
+                                                            <td class="min-w-125px">
+                                                                <div class="d-grid gap-2 d-md-block">
+                                                                    <button class="btn btn-transparent p-2" type="button">
+                                                                        <img
+                                                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADWElEQVRYhc2XUWhbVRyHv/9J2ln2YBVd2gyhTVIsnTDwRceauiSCWHAPPoiob1OL6MCHzYeBessehDF8EYq4Z9mLiDgQxWR1hcn2oIg6F4hEmaxN0CqyrVCk5+dDb9K5Nultmqm/p3M49/6/j3vOufce+I9jt/RdJpMZ9d6POudikQqYfV+pVC53KhBvNNLp9H3AaUn7zQxJkQpIWgTu2Wgs+PSXu31PvAA24LCvgkLiy1YCDjgN7AeuAheBlYgC64oCBKVaHvSBwV0ghAhKC2dY0tPBE8mlxnUGkMlkxiRdAq5K2lOtVv+MAm+VoFh/FPMfC/qAOeBbsOdA/QYllnSwIeEAvPej4b0XuwoXM9P5gQPThcHD5vw+EwuCAn32YRDINQVuWnCRHntkeGHgFcwEEOSSZWLKAzUZj5FdeLEp0I20gzevySXLkr262rODXROIAm/G6XrY6u2KwFbgx4r1hImTAN6sBDe9B/4NeI/5s8Aosm/+WL729rYEgtL8BPiPBH2GnQoKiZbw4LPaLpkvAmNA2WLu8XcmR5ahwylYhdsngp2GnQryiam28LhKwANA2VwsF+R21RrjWxboJnzLAt2Gb0mgU7jB5VbwyAJvfFF7AdnnHnYiZtrBjxXrCcU1G8K/W+7hkVbwyAK2wkkZvcCl6cLA4QhbbSyEF96aGPy1Xe1NBYJAztAOAIM9wWx9BunWH5mO4JEE/to3v1uww9CiwQ1JU2+eXXiv8TUDCGZ/6u8EHkmgJx4bWW3ZD6BJgxtgzzOxJrGiO/ZGhQ8PD2fT6fS7Q0ND/ZEEMJ8BkKgEheQcaBK4LtmhhsTx/OA5b36c5d7xTefcuZeBKedcHqK8ir1lMMD4/fXifBZzGcmfcbKnhB2ybC0DHDie331+01qhQygSiyQgsxEQwBFndkQShtFYhoL7I4I3zKYCZtQlMFgEfhRWManizSoe6vElf+G2CgS5xEuvnf/t6Inxe69tB9RWwHu/YmYA6w8jZjoB3YTHQqaHtQVRDgcfSqVSd3YR9o+EW+/hsHsF1o5mLp1OnwPGgXngAtv8Q94gsRCelDRXrVZzgG+sAQ88A7wPZIEnuwxvRtKcc+7ZkLn+cJpKpR50zg3fDrb3/udqtfp1A/6/yN+YYbjrot53XgAAAABJRU5ErkJggg==">
+                                                                    </button>
+                                                                    <button id="deleteBadge" data-id="1"
+                                                                        class="btn btn-transparent p-2" type="button"><img
+                                                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADp0lEQVRYhc2X32ubVRjHP8+bbEtNdS2zorlpm5OklUCsFAXZnLqq+C94I/PCi13o9ZAxIojCQLzxQnajBS+m4rU3Zm5uzEGFsWJUurxNLFVLW9iwXdcmb87jRd7YvG1+tSno9yYn53yf5/nmeU6ecw78x5C9kIeHh58Ih8MTItLfbF1V16vV6q1SqbR04AISicR7qnoWONyBWhaRDwuFQvbABBhjTgOfAR6QA/5uQX0EmALCwGnXdac7+Q53IwB4G0BE3iwUCl90EPsGMA2843+2hdOJMD4+fgyYAB4AX3fiRyKRS8AG8HQqlXq0ZwHlcvlFn3ejUChsdeLn8/kycBMQz/NOduLvKoEx5riqfgBMiki0YelqJ2cNuAKcEpFvjDGo6n0R+Ql413XdG43EQAaMMceBqyJyckfwVWvtV91G97mr9e++rxeAHxKJxHMtDY0xV4wxGo/HP8pkMtGWxD0ik8lEE4nEx8YYNcb82LgW+BvG4/F1EYlGo9H+2dnZ+wclACCdTvdvbm6uAWXXdY/U5wMlqKf9oIMD5PP5dX8YaGQ7N+GfQGx0dPRbx3FSO8k9oAzc8cd/tBSgqudE5KLjOK8dUOBGxKl10nONk7tacSqVilcqldcdx3kf+EtELvUaWVXXVfV2OBy+NTc3N99WAMDIyMh4KBT6FZhzXXesl+DGmC+BpyKRSMZvUgE0PQs8z1sOhUIAQ70E9/EqMLC2thalthcCaNqKFxcX71Kr18Dk5OShxrWz134fzOaWTqG6nT1VOX95aSr7fXGgkZtOpw8DR4HKwsLCvWaxWp0FSq2TyerqauBAOVI+dEHRXDa3PFWfO59bfllUv8P2XWjkViqVIWplXvF9di0A3wjHcQJlEOQogBU7uD1p/V+ugQyo6hCAiKy0CtJRgIg81obTFp7nDflC9i+AHjaiiNRt9yVgeYcT3ysWwBGt/uvEHytUCaJuu9wqSLsrWfMMVPUTHLn7oBrJbYvauoxGPrViA9e1bjLQUoCqrojILgHZV2LXgeuBuZdG7wFnmrip75/9l0BVY204baGqj+9bgLX2FwARORGLxR7aa/BMJhMVked9IT/vWUCpVPoNmAEG+/r6Pk+n001fQ80wNjb28MbGxjQwANycn5+/04rb9mGSTCYnrLXXgH5qnXEGWG9n43OfBY4Ba9baE8VicXZfAhpEXASe6cTdgRlr7VvFYvF2O1LXb8NkMvmkqnZzS9ryPG/OL+H/H/8AzDJIFzqAtQMAAAAASUVORK5CYII="></button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                   
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+
+
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Table Widget 3-->
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Content-->
+                <!--begin::Footer-->
+                {% include 'components/footer.html' %}
+                <!--end::Footer-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Root-->
+    <!--end::Main-->
+
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+        <span class="svg-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1"
+                    transform="rotate(90 13 6)" fill="black" />
+                <path
+                    d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                    fill="black" />
+            </svg>
+        </span>
+        <!--end::Svg Icon-->
+    </div>
+    <!--end::Scrolltop-->
+    <!--begin::Modals-->
+    <!--begin::Modal - Offer A Deal-->
+    <div class="modal fade" id="kt_modal_create_campaign" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-xl p-9">
+            <!--begin::Modal content-->
+            <div class="modal-content modal-rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header py-4 d-flex justify-content-between">
+                    <!--begin::Modal title-->
+                    <h2>Create New Badge</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                    rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                    transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <div class="modal-body scroll-y">
+                    <div class="content">
+                        <form id="Formdata" action="#" method="post">
+                            
+                            <section data-step="0">
+                                <div class="current" data-kt-stepper-element="content">
+                                    <!--begin::Wrapper-->
+                                    <div class="w-100">
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="fv-row mb-10">
+                                                    <!--begin::Label-->
+                                                    <label class="d-block fw-bold fs-6 mb-5">
+                                                        <span class="required">Badge Image</span>
+                                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                            data-bs-toggle="tooltip"
+                                                            title="E.g. Select a logo to represent the company that's running the campaign."></i>
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Image input-->
+                                                    <div class="image-input image-input-empty image-input-outline"
+                                                        data-kt-image-input="true"
+                                                        style="background-image: url({% static 'images/inPowerLogo.svg' %})">
+                                                        <!--begin::Preview existing avatar-->
+                                                        <div class="image-input-wrapper w-150px h-150px"></div>
+                                                        <!--end::Preview existing avatar-->
+                                                        <!--begin::Label-->
+                                                        <label
+                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                            data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                                            title="Change avatar">
+                                                            <i class="bi bi-pencil-fill fs-7"></i>
+                                                            <!--begin::Inputs-->
+                                                            <input type="file" id="groupImage" name="avatar"
+                                                                accept=".png, .jpg, .jpeg" />
+                                                            <input type="hidden" name="avatar_remove" />
+                                                            <!--end::Inputs-->
+                                                        </label>
+                                                        <!--end::Label-->
+                                                        <!--begin::Cancel-->
+                                                        <span
+                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                            data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
+                                                            title="Cancel avatar">
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
+                                                        <!--end::Cancel-->
+                                                        <!--begin::Remove-->
+                                                        <span
+                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                            data-kt-image-input-action="remove" data-bs-toggle="tooltip"
+                                                            title="Remove avatar">
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
+                                                        <!--end::Remove-->
+                                                    </div>
+                                                    <!--end::Image input-->
+                                                    <!--begin::Hint-->
+                                                    <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                                                    <!--end::Hint-->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="mb-6 mt-8 fv-row">
+                                                            <!--begin::Label-->
+                                                            <label class="required form-label mb-3">Badge Title</label>
+                                                            <!--end::Label-->
+                                                            <!--begin::Input-->
+                                                            <input type="text" id="badge_title"
+                                                                class="form-control form-control-lg form-control-solid"
+                                                                name="badge_title" placeholder="" value="" />
+                                                            <!--end::Input-->
+                                                        </div>
+                                                        
+
+                                                        <div class="col-md-12">
+                                                            <p id="message-content"></p>
+                                                        </div>
+
+                                                        {% comment %} <div class="row">
+                                                            <div class="col-md-3 ml-auto d-flex justify-content-end">
+                                                              <button class="btn btn-info" type="submit">Add</button>
+                                                            </div>
+                                                          </div> {% endcomment %}
+
+                                                                                                            
+                                                                                                                                                                                
+                                                                                                                        
+                                                            <div class="container">
+                                                                <div class="row">
+                                                                <div class="col-md-3 ml-auto d-flex justify-content-end">
+                                                                    <button class="btn btn-info" type="button" id="add-button">Add</button>
+                                                                </div>
+                                                                </div>
+                                                                <div class="row mt-3">
+                                                                <div class="col-md-3 ml-auto" id="checkbox-container">
+                                                                    <form id="checkbox-form">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input single-checkbox" type="checkbox" id="checkbox1">
+                                                                            <label class="form-check-label" for="checkbox1">
+                                                                              Reading
+                                                                            </label>
+                                                                          </div> <br>
+
+                                                                          <div class="form-check">
+                                                                            <input class="form-check-input single-checkbox" type="checkbox" id="checkbox2">
+                                                                            <label class="form-check-label" for="checkbox2">
+                                                                              Video
+                                                                            </label>
+                                                                          </div> <br>
+
+                                                                          <div class="form-check">
+                                                                            <input class="form-check-input single-checkbox" type="checkbox" id="checkbox3">
+                                                                            <label class="form-check-label" for="checkbox3">
+                                                                              Questions
+                                                                            </label>
+                                                                          </div> <br>
+
+                                                                          <div class="form-check">
+                                                                            <input class="form-check-input single-checkbox" type="checkbox" id="checkbox4">
+                                                                            <label class="form-check-label" for="checkbox4">
+                                                                              Written Answers
+                                                                            </label>
+                                                                          </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 ml-auto" >
+                                                                                <button class="btn btn-primary mt-2" type="button" id="add-Submit">Submit</button>
+                                                                            </div>
+                                                                            <div class="col-md-6 ml-auto">
+                                                                                <button class="btn btn-secondary mt-2 ml-2" type="button" id="cancel-button">Cancel</button> 
+                                                                            </div>
+                                                                        </div>       
+                                                                   
+                                                                    </form>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+  
+
+
+{% comment %}                                                                 
+                                                        <div class="row">
+                                                            <div class="col-md-3 ml-auto d-flex justify-content-end">
+                                                              <button class="btn btn-info" type="submit">Add</button>
+                                                            </div>
+                                                          </div> {% endcomment %}
+        
+                                                    </div>
+                                                </div>
+
+                                                
+                                                
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!--end::Wrapper-->
+                                </div>
+                            </section>
+                            <div class="justify-content-md-end float-end mt-5">
+                                <button class="btn btn-primary" type="submit">Create Badge</button>
+                            </div> 
+
+                        </form>
+                    </div>
+                </div>
+                <!--begin::Modal body-->
+            </div>
+        </div>
+    </div>
+    <!--end::Modal - Offer A Deal-->
+    <script>
+        $(document).ready(function() { // Wait until document is fully parsed
+            $("#Formdata").on('submit', function(e) {
+
+                e.preventDefault();
+
+                var groupImg = $(".image-input-wrapper").css('background-image');
+                groupImg = groupImg.replace('url(', '').replace(')', '').replace(/\"/gi, "");
+
+                var formData = {
+                    badge_title: $("#badge_title").val(),
+                    badge_video_url: $("#badge_video_url").val(),
+                    groupImg: groupImg,
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "/create-badge",
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        jQuery('#Formdata').trigger("reset");
+                        console.log(data);
+                        alert(data.errors.detail);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                        alert(data.errors.detail);
+                    }
+                });
+
+            });
+        })
+        //delete badge start here
+        $("body").delegate("#deleteBadge", "click", function() {
+            var id = $(this).attr('data-id');
+            var r = confirm("Are you sure want to delete?")
+            if (r == true) {
+                var formData = {
+                    id: id,
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'delete-badge' %}",
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        alert("Badge Successfully Deleted!");
+                        location.reload();
+                    }
+                });
+                return true;
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+          $('.single-checkbox').on('change', function() {
+            $('.single-checkbox').not(this).prop('checked', false);
+          });
+        });
+      </script>
+
+    <script>
+        document.getElementById('add-button').addEventListener('click', function() {
+          document.getElementById('add-button').style.display = 'none';
+          document.getElementById('checkbox-container').style.display = 'block';
+        });
+
+        document.getElementById('cancel-button').addEventListener('click', function() {
+          document.getElementById('add-button').style.display = 'block';
+          document.getElementById('checkbox-container').style.display = 'none';
+        });
+      
+        document.getElementById('add-Submit').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+            document.getElementById('checkbox-container').style.display = 'none';
+          document.getElementById('add-button').style.display = 'block';
+            if (document.getElementById('checkbox1').checked) {
+                $('#message-content').append(`
+                    <div class="fv-row mb-10">
+                        <div style="position: relative; border: 2px solid #fd466c; border-radius: 10px; border-style: double;" class="p-5 mb-3">
+                            <p style="position: absolute; top: -30px; left: 9px; background: white; padding: 2px 12px; font-weight: 600; border: 2px solid #fd466c; border-style: double; border-radius: 26px;" class="mb-0">
+                                Section 1 - Reading
+                            </p>
+                            <div>
+                                <label class="required form-label mb-3">Slide 1</label>
+                                <textarea class="form-control" rows="10" placeholder="Start writing your post, Add images, videos" name="message" id="ffff"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            
+                // Initialize CKEditor after appending the element
+               
+            }
+            
+            ClassicEditor
+            .create(document.querySelector('#ffff'))
+            .catch(error => {
+                console.error(error);
+            });
+        
+            if (document.getElementById('checkbox2').checked) {
+                $('#message-content').append(`
+                    <div class="fv-row mb-10">
+                        <div style="position: relative; border: 2px solid #fd466c; border-radius: 10px; border-style: double;" class="p-5 mb-3">
+                            <p style="position: absolute; top: -30px; left: 9px; background: white; padding: 2px 12px; font-weight: 600; border: 2px solid #fd466c; border-style: double; border-radius: 26px;" class="mb-0">
+                                Section 2 - Video
+                            </p>
+                            <div class="p-2"></div>
+                            <div class="question_container">
+                                <div class="questions">
+                                    <div class="mb-1 fv-row">
+                                        <input type="text" class="form-control form-control-lg form-control-solid" name="q_title" placeholder="" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+        
+        
+              }
+        
+            if (document.getElementById('checkbox3').checked) {
+                $('#message-content').append(`
+                    <div class="fv-row mb-10 ">
+                        
+                            <div style="position: relative; border: 2px solid #fd466c; border-radius: 10px; border-style: double;" class="p-5 mb-3">
+                                <div class="add-more-question_container">
+                                <p style="position: absolute; top: -30px; left: 9px; background: white; padding: 2px 12px; font-weight: 600; border: 2px solid #fd466c; border-style: double; border-radius: 26px;" class="mb-0">
+                                    Section 3 - Questions 
+                                </p>
+                                <button type="button" style="top: -14px; right: 125px; padding: 2px 10px;" class="position-absolute btn btn-primary add-more-question">
+                                    <i class="fa fa-plus mr-2"></i> Add Question
+                                </button>
+                                <div class="p-2"></div>
+                                <div class="question_container">
+                                    <div class="questions">
+                                        <div class="mb-1 fv-row">
+                                            <label class="required form-label mb-1">Question Description</label>
+                                            <button type="button" style="top: -14px; right: 10px; padding: 2px 10px;" class="float-end mb-4 btn btn-primary add_more_options">
+                                                <i class="fa fa-plus mr-2"></i> Add Option
+                                            </button>
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="q_title" placeholder="" value="">
+                                        </div>
+                                        <div class="row mt-4 q_type_option">
+                                            <div class="col-md-3">
+                                                <div class="mb-1 fv-row">
+                                                    <label class="required form-label mb-1">Option</label>
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" name="options[]" placeholder="" value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="mb-1 fv-row">
+                                                    <label class="required form-label mb-1">Option</label>
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" name="options[]" placeholder="" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            }
+            if (document.getElementById('checkbox4').checked) {
+                $('#message-content').append(`
+                    <div class="fv-row mb-10">
+                        <div style="position: relative; border: 2px solid #fd466c; border-radius: 10px; border-style: double;" class="p-5 mb-3">
+                            <p style="position: absolute; top: -30px; left: 9px; background: white; padding: 2px 12px; font-weight: 600; border: 2px solid #fd466c; border-style: double; border-radius: 26px;" class="mb-0">
+                                Section 4 - Written Answers
+                            </p>
+                            <div class="p-2"></div>
+                            <div class="question_container">
+                                <div class="questions">
+                                    <div class="mb-1 fv-row">
+                                        <input type="text" class="form-control form-control-lg form-control-solid" name="q_title" placeholder="" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+        
+        
+              }
+        });
+        
+        $(document).on('click', '.add_more_options', function() {
+            $(this).closest('.questions').find('.q_type_option').append(`
+                <div class="col-md-3">
+                    <div class="mb-1 fv-row">
+                        <label class="required form-label mb-1">Option</label>
+                        <input type="text" class="form-control form-control-lg form-control-solid" name="options[]" placeholder="" value="">
+                    </div>
+                </div>
+            `);
+        });
+        
+        $(document).on('click', '.add-more-question', function() {
+            $(this).closest('.add-more-question_container').append(`
+                <div class="question_container">
+                    <div class="questions">
+                        <div class="mb-1 fv-row">
+                            <label class="required form-label mb-1">Question Description</label>
+                            <button type="button" style="top: -14px; right: 10px; padding: 2px 10px;" class="float-end mb-4 btn btn-primary add_more_options">
+                                <i class="fa fa-plus mr-2"></i> Add Option
+                            </button>
+                            <input type="text" class="form-control form-control-lg form-control-solid" name="q_title" placeholder="" value="">
+                        </div>
+                        <div class="row mt-4 q_type_option">
+                            <div class="col-md-3">
+                                <div class="mb-1 fv-row">
+                                    <label class="required form-label mb-1">Option</label>
+                                    <input type="text" class="form-control form-control-lg form-control-solid" name="options[]" placeholder="" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-1 fv-row">
+                                    <label class="required form-label mb-1">Option</label>
+                                    <input type="text" class="form-control form-control-lg form-control-solid" name="options[]" placeholder="" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+      </script>
+      <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
+      <script>
+
+        {% comment %} ClassicEditor
+            .create(document.querySelector('#content'))
+            .catch(error => {
+                console.error(error);
+            }); {% endcomment %}
+    </script>
+
+      
+    {% endblock %}
+

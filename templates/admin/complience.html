@@ -1,0 +1,471 @@
+{% extends 'layouts/master.html' %}
+{% load static %}
+
+{% block title %}ggg{% endblock %}
+
+
+{% block content %}
+
+<div class="d-flex flex-column flex-root">
+    <!--begin::Page-->
+    <div class="page d-flex flex-row flex-column-fluid">
+        <!--begin::Aside-->
+        <div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside"
+            data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
+            data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
+            data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+            <!--begin::Aside menu-->
+            {% include 'components/leftNavigationBar.html' %}
+
+            <!--end::Aside menu-->
+        </div>
+        <!--end::Aside-->
+        <!--begin::Wrapper-->
+        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+
+            {% include 'components/header.html' with default_title="Report List" %}
+
+
+            <!--begin::Content-->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <!--begin::Container-->
+                <div id="kt_content_container" class="container-fluid">
+                    <div class="row g-5 g-xxl-10">
+                        <div class="col-xl-12 mb-5 mb-xxl-10">
+                            <!--begin::Table Widget 3-->
+                            <div class="card card-flush h-xl-100">
+                                <!--begin::Card header-->
+                                <div class="card-header py-7">
+                                    <!--begin::Tabs-->
+                                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                        <li class="pb-3 me-4 cursor-pointer nav-item" role="presentation">
+                                            <button
+                                                class="fs-4 text-muted fw-bolder bg-transparent nav-link rounded-0 active"
+                                                id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                                                type="button" role="tab" aria-controls="pills-home"
+                                                aria-selected="true">Posts</button>
+                                        </li>
+                                        <li class="pb-3 me-4 cursor-pointer nav-item" role="presentation">
+                                            <button class="fs-4 fw-bolder text-muted rounded-0 bg-transparent nav-link"
+                                                id="pills-profile-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-profile" type="button" role="tab"
+                                                aria-controls="pills-profile" aria-selected="false">Groups</button>
+                                        </li>
+                                        <li class="pb-3 me-4 cursor-pointer nav-item" role="presentation">
+                                            <button class="fs-4 fw-bolder text-muted rounded-0 bg-transparent nav-link"
+                                                id="pills-contact-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-contact" type="button" role="tab"
+                                                aria-controls="pills-contact" aria-selected="false">Profiles</button>
+                                        </li>
+                                        <li class="pb-3 me-4 cursor-pointer nav-item" role="presentation">
+                                            <button class="fs-4 fw-bolder text-muted rounded-0 bg-transparent nav-link"
+                                                id="pills-comments-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-comments" type="button" role="tab"
+                                                aria-controls="pills-comments" aria-selected="false">Comments</button>
+                                        </li>
+                                        <li class="pb-3 me-4 cursor-pointer nav-item" role="presentation">
+                                            <button class="fs-4 fw-bolder text-muted rounded-0 bg-transparent nav-link"
+                                                id="pills-pages-tab" data-bs-toggle="pill" data-bs-target="#pills-pages"
+                                                type="button" role="tab" aria-controls="pills-pages"
+                                                aria-selected="false">Pages</button>
+                                        </li>
+                                    </ul>
+                                    <!--end::Tabs-->
+                                </div>
+                                <!--end::Card header-->
+                                <!--begin::Card body-->
+                                <div class="tab-content card-body pt-1" id="pills-tabContent">
+
+                                    <!--begin::Seprator-->
+                                    <div class="separator separator-dashed my-5"></div>
+                                    <!--end::Seprator-->
+
+                                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                        aria-labelledby="pills-home-tab">
+                                        <!--begin::Table-->
+
+
+
+
+
+                                        <table id="all_post_listing"
+                                            class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                            data-kt-table-widget-3="all">
+                                            <thead class="">
+                                                <tr>
+                                                    <th>Post User Info </th>
+                                                    <th>Gender</th>
+                                                    <th>Post images</th>
+                                                    <th>Reason for Report</th>
+                                                    <th>Likes</th>
+                                                    <th>Loves</th>
+                                                    <th>Laughs</th>
+                                                    <th>Comments</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for post in posts %}
+                                                <tr>
+                                                    <td class="group_name">
+
+                                                        <div
+                                                            class="position-relative ps-6 pe-3 py-2 d-flex align-items-sm-center mb-7">
+                                                            <div
+                                                                class="position-absolute start-0 top-0 w-4px h-100 rounded-2 bg-warning">
+                                                            </div>
+                                                            <!--begin::Symbol-->
+                                                            <div class="symbol symbol-50px symbol-2by3 me-4">
+                                                                <div class="symbol-label"
+                                                                    style="background-image: url({{ post.post.author.profileImageUrl }})">
+                                                                </div>
+                                                            </div>
+
+
+                                                            <!--begin::Content-->
+                                                            <div class="d-flex flex-stack w-100">
+                                                                <!--begin::Title-->
+                                                                <div class="my-lg-0 my-2 me-2">
+                                                                    <a href=""
+                                                                        class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                                                                        {{ post.post.author.firstname }} 
+                                                                        {{ post.post.author.lastname }}</a>
+
+                                                                </div>
+                                                                <!--end::Title-->
+
+                                                            </div>
+                                                            <!--end::Content-->
+
+                                                    </td>
+                                                    <td class="group_description">
+                                                        <div class="fs-7 text-muted fw-bolder">
+                                                            {{ post.post.author.gender }}
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="group_status">
+                                                        {% for image in post.post.images %}
+                                                        <img width="100px" src="{{ image }}" alt="Post Image"> <br><br>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td class="group_description">
+                                                        <div class="fs-7 text-muted fw-bolder">
+                                                            {{ post.reason }}
+                                                        </div>
+                                                    </td>
+                                                   
+                                                    </td>
+                                                    <td class="group_description">
+                                                        <div class="fs-7 text-muted fw-bolder">
+                                                            {{ post.post.reactions.like|length }}
+                                                        </div>
+                                                    </td>
+                                                    
+                                                    </td>
+                                                    <td class="group_description">
+                                                        <div class="fs-7 text-muted fw-bolder">
+                                                            {{ post.post.reactions.love|length }}
+                                                        </div>
+                                                    </td>
+                                                    
+                                                    </td>
+                                                    <td class="group_description">
+                                                        <div class="fs-7 text-muted fw-bolder">
+                                                            {{ post.post.reactions.laugh|length }}
+                                                        </div>
+                                                    </td>
+                                                    
+                                                    </td>
+                                                    <td class="group_description">
+                                                        <div class="fs-7 text-muted fw-bolder">
+                                                            {{ post.post.comments|length }}
+                                                        </div>
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                        <!--end::Table-->
+
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                        aria-labelledby="pills-profile-tab">
+                                        <!--begin::Table-->
+                                        <table id="all_group_listing"
+                                            class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                            data-kt-table-widget-3="all">
+                                            <thead class="">
+                                                <tr>
+                                                    <th>Group</th>
+                                                    <th>Reason</th>
+                                                    <th>User</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr>
+                                                    <td class="group_name">
+
+                                                        <!--begin::Content-->
+                                                        <div class="d-flex flex-stack w-100">
+                                                            <!--begin::Title-->
+                                                            <div class="my-lg-0 my-2 me-2">
+                                                                <a href="#"
+                                                                    class="text-gray-800 fw-bolder text-hover-primary fs-6">2</a>
+
+                                                            </div>
+                                                            <!--end::Title-->
+
+                                                        </div>
+                                                        <!--end::Content-->
+
+                                                    </td>
+                                                    <td class="group_description">
+                                                        <div class="fs-7 text-muted fw-bolder">
+                                                            Very important group.
+                                                        </div>
+                                                    </td>
+                                                    <td class="group_status">
+                                                        <span class="badge badge-light-success">32</span>
+                                                    </td>
+
+                                                    <td class="min-w-125px">
+                                                        <div class="d-grid gap-2 d-md-block">
+                                                            <button class="btn btn-transparent p-2" type="button">
+                                                                <img
+                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADWElEQVRYhc2XUWhbVRyHv/9J2ln2YBVd2gyhTVIsnTDwRceauiSCWHAPPoiob1OL6MCHzYeBessehDF8EYq4Z9mLiDgQxWR1hcn2oIg6F4hEmaxN0CqyrVCk5+dDb9K5Nultmqm/p3M49/6/j3vOufce+I9jt/RdJpMZ9d6POudikQqYfV+pVC53KhBvNNLp9H3AaUn7zQxJkQpIWgTu2Wgs+PSXu31PvAA24LCvgkLiy1YCDjgN7AeuAheBlYgC64oCBKVaHvSBwV0ghAhKC2dY0tPBE8mlxnUGkMlkxiRdAq5K2lOtVv+MAm+VoFh/FPMfC/qAOeBbsOdA/QYllnSwIeEAvPej4b0XuwoXM9P5gQPThcHD5vw+EwuCAn32YRDINQVuWnCRHntkeGHgFcwEEOSSZWLKAzUZj5FdeLEp0I20gzevySXLkr262rODXROIAm/G6XrY6u2KwFbgx4r1hImTAN6sBDe9B/4NeI/5s8Aosm/+WL729rYEgtL8BPiPBH2GnQoKiZbw4LPaLpkvAmNA2WLu8XcmR5ahwylYhdsngp2GnQryiam28LhKwANA2VwsF+R21RrjWxboJnzLAt2Gb0mgU7jB5VbwyAJvfFF7AdnnHnYiZtrBjxXrCcU1G8K/W+7hkVbwyAK2wkkZvcCl6cLA4QhbbSyEF96aGPy1Xe1NBYJAztAOAIM9wWx9BunWH5mO4JEE/to3v1uww9CiwQ1JU2+eXXiv8TUDCGZ/6u8EHkmgJx4bWW3ZD6BJgxtgzzOxJrGiO/ZGhQ8PD2fT6fS7Q0ND/ZEEMJ8BkKgEheQcaBK4LtmhhsTx/OA5b36c5d7xTefcuZeBKedcHqK8ir1lMMD4/fXifBZzGcmfcbKnhB2ybC0DHDie331+01qhQygSiyQgsxEQwBFndkQShtFYhoL7I4I3zKYCZtQlMFgEfhRWManizSoe6vElf+G2CgS5xEuvnf/t6Inxe69tB9RWwHu/YmYA6w8jZjoB3YTHQqaHtQVRDgcfSqVSd3YR9o+EW+/hsHsF1o5mLp1OnwPGgXngAtv8Q94gsRCelDRXrVZzgG+sAQ88A7wPZIEnuwxvRtKcc+7ZkLn+cJpKpR50zg3fDrb3/udqtfp1A/6/yN+YYbjrot53XgAAAABJRU5ErkJggg==">
+                                                            </button>
+                                                            <button class="btn btn-transparent p-2" type="button"><img
+                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADp0lEQVRYhc2X32ubVRjHP8+bbEtNdS2zorlpm5OklUCsFAXZnLqq+C94I/PCi13o9ZAxIojCQLzxQnajBS+m4rU3Zm5uzEGFsWJUurxNLFVLW9iwXdcmb87jRd7YvG1+tSno9yYn53yf5/nmeU6ecw78x5C9kIeHh58Ih8MTItLfbF1V16vV6q1SqbR04AISicR7qnoWONyBWhaRDwuFQvbABBhjTgOfAR6QA/5uQX0EmALCwGnXdac7+Q53IwB4G0BE3iwUCl90EPsGMA2843+2hdOJMD4+fgyYAB4AX3fiRyKRS8AG8HQqlXq0ZwHlcvlFn3ejUChsdeLn8/kycBMQz/NOduLvKoEx5riqfgBMiki0YelqJ2cNuAKcEpFvjDGo6n0R+Ql413XdG43EQAaMMceBqyJyckfwVWvtV91G97mr9e++rxeAHxKJxHMtDY0xV4wxGo/HP8pkMtGWxD0ik8lEE4nEx8YYNcb82LgW+BvG4/F1EYlGo9H+2dnZ+wclACCdTvdvbm6uAWXXdY/U5wMlqKf9oIMD5PP5dX8YaGQ7N+GfQGx0dPRbx3FSO8k9oAzc8cd/tBSgqudE5KLjOK8dUOBGxKl10nONk7tacSqVilcqldcdx3kf+EtELvUaWVXXVfV2OBy+NTc3N99WAMDIyMh4KBT6FZhzXXesl+DGmC+BpyKRSMZvUgE0PQs8z1sOhUIAQ70E9/EqMLC2thalthcCaNqKFxcX71Kr18Dk5OShxrWz134fzOaWTqG6nT1VOX95aSr7fXGgkZtOpw8DR4HKwsLCvWaxWp0FSq2TyerqauBAOVI+dEHRXDa3PFWfO59bfllUv8P2XWjkViqVIWplXvF9di0A3wjHcQJlEOQogBU7uD1p/V+ugQyo6hCAiKy0CtJRgIg81obTFp7nDflC9i+AHjaiiNRt9yVgeYcT3ysWwBGt/uvEHytUCaJuu9wqSLsrWfMMVPUTHLn7oBrJbYvauoxGPrViA9e1bjLQUoCqrojILgHZV2LXgeuBuZdG7wFnmrip75/9l0BVY204baGqj+9bgLX2FwARORGLxR7aa/BMJhMVked9IT/vWUCpVPoNmAEG+/r6Pk+n001fQ80wNjb28MbGxjQwANycn5+/04rb9mGSTCYnrLXXgH5qnXEGWG9n43OfBY4Ba9baE8VicXZfAhpEXASe6cTdgRlr7VvFYvF2O1LXb8NkMvmkqnZzS9ryPG/OL+H/H/8AzDJIFzqAtQMAAAAASUVORK5CYII="></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                                        aria-labelledby="pills-contact-tab">
+                                        <!--begin::Table-->
+                                        <table id="all_profiles_listing"
+                                            class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                            data-kt-table-widget-3="all">
+                                            <thead class="">
+                                                <tr>
+                                                    <th>Profile</th>
+                                                    <th>Reason</th>
+                                                    <th>User</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr>
+                                                    <td class="group_name">
+
+                                                        <!--begin::Content-->
+                                                        <div class="d-flex flex-stack w-100">
+                                                            <!--begin::Title-->
+                                                            <div class="my-lg-0 my-2 me-2">
+                                                                <a href="#"
+                                                                    class="text-gray-800 fw-bolder text-hover-primary fs-6">21</a>
+
+                                                            </div>
+                                                            <!--end::Title-->
+
+                                                        </div>
+                                                        <!--end::Content-->
+
+                                                    </td>
+                                                    <td class="group_description">
+                                                        <div class="fs-7 text-muted fw-bolder">
+                                                            Unhappy Person
+                                                        </div>
+                                                    </td>
+                                                    <td class="group_status">
+                                                        <span class="badge badge-light-success">12</span>
+                                                    </td>
+
+                                                    <td class="min-w-125px">
+                                                        <div class="d-grid gap-2 d-md-block">
+                                                            <button class="btn btn-transparent p-2" type="button">
+                                                                <img
+                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADWElEQVRYhc2XUWhbVRyHv/9J2ln2YBVd2gyhTVIsnTDwRceauiSCWHAPPoiob1OL6MCHzYeBessehDF8EYq4Z9mLiDgQxWR1hcn2oIg6F4hEmaxN0CqyrVCk5+dDb9K5Nultmqm/p3M49/6/j3vOufce+I9jt/RdJpMZ9d6POudikQqYfV+pVC53KhBvNNLp9H3AaUn7zQxJkQpIWgTu2Wgs+PSXu31PvAA24LCvgkLiy1YCDjgN7AeuAheBlYgC64oCBKVaHvSBwV0ghAhKC2dY0tPBE8mlxnUGkMlkxiRdAq5K2lOtVv+MAm+VoFh/FPMfC/qAOeBbsOdA/QYllnSwIeEAvPej4b0XuwoXM9P5gQPThcHD5vw+EwuCAn32YRDINQVuWnCRHntkeGHgFcwEEOSSZWLKAzUZj5FdeLEp0I20gzevySXLkr262rODXROIAm/G6XrY6u2KwFbgx4r1hImTAN6sBDe9B/4NeI/5s8Aosm/+WL729rYEgtL8BPiPBH2GnQoKiZbw4LPaLpkvAmNA2WLu8XcmR5ahwylYhdsngp2GnQryiam28LhKwANA2VwsF+R21RrjWxboJnzLAt2Gb0mgU7jB5VbwyAJvfFF7AdnnHnYiZtrBjxXrCcU1G8K/W+7hkVbwyAK2wkkZvcCl6cLA4QhbbSyEF96aGPy1Xe1NBYJAztAOAIM9wWx9BunWH5mO4JEE/to3v1uww9CiwQ1JU2+eXXiv8TUDCGZ/6u8EHkmgJx4bWW3ZD6BJgxtgzzOxJrGiO/ZGhQ8PD2fT6fS7Q0ND/ZEEMJ8BkKgEheQcaBK4LtmhhsTx/OA5b36c5d7xTefcuZeBKedcHqK8ir1lMMD4/fXifBZzGcmfcbKnhB2ybC0DHDie331+01qhQygSiyQgsxEQwBFndkQShtFYhoL7I4I3zKYCZtQlMFgEfhRWManizSoe6vElf+G2CgS5xEuvnf/t6Inxe69tB9RWwHu/YmYA6w8jZjoB3YTHQqaHtQVRDgcfSqVSd3YR9o+EW+/hsHsF1o5mLp1OnwPGgXngAtv8Q94gsRCelDRXrVZzgG+sAQ88A7wPZIEnuwxvRtKcc+7ZkLn+cJpKpR50zg3fDrb3/udqtfp1A/6/yN+YYbjrot53XgAAAABJRU5ErkJggg==">
+                                                            </button>
+                                                            <button class="btn btn-transparent p-2" type="button"><img
+                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADp0lEQVRYhc2X32ubVRjHP8+bbEtNdS2zorlpm5OklUCsFAXZnLqq+C94I/PCi13o9ZAxIojCQLzxQnajBS+m4rU3Zm5uzEGFsWJUurxNLFVLW9iwXdcmb87jRd7YvG1+tSno9yYn53yf5/nmeU6ecw78x5C9kIeHh58Ih8MTItLfbF1V16vV6q1SqbR04AISicR7qnoWONyBWhaRDwuFQvbABBhjTgOfAR6QA/5uQX0EmALCwGnXdac7+Q53IwB4G0BE3iwUCl90EPsGMA2843+2hdOJMD4+fgyYAB4AX3fiRyKRS8AG8HQqlXq0ZwHlcvlFn3ejUChsdeLn8/kycBMQz/NOduLvKoEx5riqfgBMiki0YelqJ2cNuAKcEpFvjDGo6n0R+Ql413XdG43EQAaMMceBqyJyckfwVWvtV91G97mr9e++rxeAHxKJxHMtDY0xV4wxGo/HP8pkMtGWxD0ik8lEE4nEx8YYNcb82LgW+BvG4/F1EYlGo9H+2dnZ+wclACCdTvdvbm6uAWXXdY/U5wMlqKf9oIMD5PP5dX8YaGQ7N+GfQGx0dPRbx3FSO8k9oAzc8cd/tBSgqudE5KLjOK8dUOBGxKl10nONk7tacSqVilcqldcdx3kf+EtELvUaWVXXVfV2OBy+NTc3N99WAMDIyMh4KBT6FZhzXXesl+DGmC+BpyKRSMZvUgE0PQs8z1sOhUIAQ70E9/EqMLC2thalthcCaNqKFxcX71Kr18Dk5OShxrWz134fzOaWTqG6nT1VOX95aSr7fXGgkZtOpw8DR4HKwsLCvWaxWp0FSq2TyerqauBAOVI+dEHRXDa3PFWfO59bfllUv8P2XWjkViqVIWplXvF9di0A3wjHcQJlEOQogBU7uD1p/V+ugQyo6hCAiKy0CtJRgIg81obTFp7nDflC9i+AHjaiiNRt9yVgeYcT3ysWwBGt/uvEHytUCaJuu9wqSLsrWfMMVPUTHLn7oBrJbYvauoxGPrViA9e1bjLQUoCqrojILgHZV2LXgeuBuZdG7wFnmrip75/9l0BVY204baGqj+9bgLX2FwARORGLxR7aa/BMJhMVked9IT/vWUCpVPoNmAEG+/r6Pk+n001fQ80wNjb28MbGxjQwANycn5+/04rb9mGSTCYnrLXXgH5qnXEGWG9n43OfBY4Ba9baE8VicXZfAhpEXASe6cTdgRlr7VvFYvF2O1LXb8NkMvmkqnZzS9ryPG/OL+H/H/8AzDJIFzqAtQMAAAAASUVORK5CYII="></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-comments" role="tabpanel"
+                                        aria-labelledby="pills-contact-tab">
+                                        <!--begin::Table-->
+                                        <table id="all_comments_listing"
+                                            class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                            data-kt-table-widget-3="all">
+                                            <thead class="">
+                                                <tr>
+                                                    <th>Profile</th>
+                                                    <th>Reason</th>
+                                                    <th>User</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr>
+                                                    <td class="group_name">
+
+                                                        <!--begin::Content-->
+                                                        <div class="d-flex flex-stack w-100">
+                                                            <!--begin::Title-->
+                                                            <div class="my-lg-0 my-2 me-2">
+                                                                <a href="#"
+                                                                    class="text-gray-800 fw-bolder text-hover-primary fs-6">45</a>
+
+                                                            </div>
+                                                            <!--end::Title-->
+
+                                                        </div>
+                                                        <!--end::Content-->
+
+                                                    </td>
+                                                    <td class="group_description">
+                                                        <div class="fs-7 text-muted fw-bolder">
+                                                            Sometime I don't understand my health.
+                                                        </div>
+                                                    </td>
+                                                    <td class="group_status">
+                                                        <span class="badge badge-light-success">34</span>
+                                                    </td>
+
+                                                    <td class="min-w-125px">
+                                                        <div class="d-grid gap-2 d-md-block">
+                                                            <button class="btn btn-transparent p-2" type="button">
+                                                                <img
+                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADWElEQVRYhc2XUWhbVRyHv/9J2ln2YBVd2gyhTVIsnTDwRceauiSCWHAPPoiob1OL6MCHzYeBessehDF8EYq4Z9mLiDgQxWR1hcn2oIg6F4hEmaxN0CqyrVCk5+dDb9K5Nultmqm/p3M49/6/j3vOufce+I9jt/RdJpMZ9d6POudikQqYfV+pVC53KhBvNNLp9H3AaUn7zQxJkQpIWgTu2Wgs+PSXu31PvAA24LCvgkLiy1YCDjgN7AeuAheBlYgC64oCBKVaHvSBwV0ghAhKC2dY0tPBE8mlxnUGkMlkxiRdAq5K2lOtVv+MAm+VoFh/FPMfC/qAOeBbsOdA/QYllnSwIeEAvPej4b0XuwoXM9P5gQPThcHD5vw+EwuCAn32YRDINQVuWnCRHntkeGHgFcwEEOSSZWLKAzUZj5FdeLEp0I20gzevySXLkr262rODXROIAm/G6XrY6u2KwFbgx4r1hImTAN6sBDe9B/4NeI/5s8Aosm/+WL729rYEgtL8BPiPBH2GnQoKiZbw4LPaLpkvAmNA2WLu8XcmR5ahwylYhdsngp2GnQryiam28LhKwANA2VwsF+R21RrjWxboJnzLAt2Gb0mgU7jB5VbwyAJvfFF7AdnnHnYiZtrBjxXrCcU1G8K/W+7hkVbwyAK2wkkZvcCl6cLA4QhbbSyEF96aGPy1Xe1NBYJAztAOAIM9wWx9BunWH5mO4JEE/to3v1uww9CiwQ1JU2+eXXiv8TUDCGZ/6u8EHkmgJx4bWW3ZD6BJgxtgzzOxJrGiO/ZGhQ8PD2fT6fS7Q0ND/ZEEMJ8BkKgEheQcaBK4LtmhhsTx/OA5b36c5d7xTefcuZeBKedcHqK8ir1lMMD4/fXifBZzGcmfcbKnhB2ybC0DHDie331+01qhQygSiyQgsxEQwBFndkQShtFYhoL7I4I3zKYCZtQlMFgEfhRWManizSoe6vElf+G2CgS5xEuvnf/t6Inxe69tB9RWwHu/YmYA6w8jZjoB3YTHQqaHtQVRDgcfSqVSd3YR9o+EW+/hsHsF1o5mLp1OnwPGgXngAtv8Q94gsRCelDRXrVZzgG+sAQ88A7wPZIEnuwxvRtKcc+7ZkLn+cJpKpR50zg3fDrb3/udqtfp1A/6/yN+YYbjrot53XgAAAABJRU5ErkJggg==">
+                                                            </button>
+                                                            <button class="btn btn-transparent p-2" type="button"><img
+                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADp0lEQVRYhc2X32ubVRjHP8+bbEtNdS2zorlpm5OklUCsFAXZnLqq+C94I/PCi13o9ZAxIojCQLzxQnajBS+m4rU3Zm5uzEGFsWJUurxNLFVLW9iwXdcmb87jRd7YvG1+tSno9yYn53yf5/nmeU6ecw78x5C9kIeHh58Ih8MTItLfbF1V16vV6q1SqbR04AISicR7qnoWONyBWhaRDwuFQvbABBhjTgOfAR6QA/5uQX0EmALCwGnXdac7+Q53IwB4G0BE3iwUCl90EPsGMA2843+2hdOJMD4+fgyYAB4AX3fiRyKRS8AG8HQqlXq0ZwHlcvlFn3ejUChsdeLn8/kycBMQz/NOduLvKoEx5riqfgBMiki0YelqJ2cNuAKcEpFvjDGo6n0R+Ql413XdG43EQAaMMceBqyJyckfwVWvtV91G97mr9e++rxeAHxKJxHMtDY0xV4wxGo/HP8pkMtGWxD0ik8lEE4nEx8YYNcb82LgW+BvG4/F1EYlGo9H+2dnZ+wclACCdTvdvbm6uAWXXdY/U5wMlqKf9oIMD5PP5dX8YaGQ7N+GfQGx0dPRbx3FSO8k9oAzc8cd/tBSgqudE5KLjOK8dUOBGxKl10nONk7tacSqVilcqldcdx3kf+EtELvUaWVXXVfV2OBy+NTc3N99WAMDIyMh4KBT6FZhzXXesl+DGmC+BpyKRSMZvUgE0PQs8z1sOhUIAQ70E9/EqMLC2thalthcCaNqKFxcX71Kr18Dk5OShxrWz134fzOaWTqG6nT1VOX95aSr7fXGgkZtOpw8DR4HKwsLCvWaxWp0FSq2TyerqauBAOVI+dEHRXDa3PFWfO59bfllUv8P2XWjkViqVIWplXvF9di0A3wjHcQJlEOQogBU7uD1p/V+ugQyo6hCAiKy0CtJRgIg81obTFp7nDflC9i+AHjaiiNRt9yVgeYcT3ysWwBGt/uvEHytUCaJuu9wqSLsrWfMMVPUTHLn7oBrJbYvauoxGPrViA9e1bjLQUoCqrojILgHZV2LXgeuBuZdG7wFnmrip75/9l0BVY204baGqj+9bgLX2FwARORGLxR7aa/BMJhMVked9IT/vWUCpVPoNmAEG+/r6Pk+n001fQ80wNjb28MbGxjQwANycn5+/04rb9mGSTCYnrLXXgH5qnXEGWG9n43OfBY4Ba9baE8VicXZfAhpEXASe6cTdgRlr7VvFYvF2O1LXb8NkMvmkqnZzS9ryPG/OL+H/H/8AzDJIFzqAtQMAAAAASUVORK5CYII="></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-pages" role="tabpanel"
+                                        aria-labelledby="pills-contact-tab">
+                                        <!--begin::Table-->
+                                        <table id="all_pages_listing"
+                                            class="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3"
+                                            data-kt-table-widget-3="all">
+                                            <thead class="">
+                                                <tr>
+                                                    <th>Page</th>
+                                                    <th>Reason</th>
+                                                    <th>User</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr>
+                                                    <td class="group_name">
+
+                                                        <!--begin::Content-->
+                                                        <div class="d-flex flex-stack w-100">
+                                                            <!--begin::Title-->
+                                                            <div class="my-lg-0 my-2 me-2">
+                                                                <a href="#"
+                                                                    class="text-gray-800 fw-bolder text-hover-primary fs-6">5</a>
+
+                                                            </div>
+                                                            <!--end::Title-->
+
+                                                        </div>
+                                                        <!--end::Content-->
+
+                                                    </td>
+                                                    <td class="group_description">
+                                                        <div class="fs-7 text-muted fw-bolder">
+                                                            Repost is not apply.
+                                                        </div>
+                                                    </td>
+                                                    <td class="group_status">
+                                                        <span class="badge badge-light-success">21</span>
+                                                    </td>
+
+                                                    <td class="min-w-125px">
+                                                        <div class="d-grid gap-2 d-md-block">
+                                                            <button class="btn btn-transparent p-2" type="button">
+                                                                <img
+                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADWElEQVRYhc2XUWhbVRyHv/9J2ln2YBVd2gyhTVIsnTDwRceauiSCWHAPPoiob1OL6MCHzYeBessehDF8EYq4Z9mLiDgQxWR1hcn2oIg6F4hEmaxN0CqyrVCk5+dDb9K5Nultmqm/p3M49/6/j3vOufce+I9jt/RdJpMZ9d6POudikQqYfV+pVC53KhBvNNLp9H3AaUn7zQxJkQpIWgTu2Wgs+PSXu31PvAA24LCvgkLiy1YCDjgN7AeuAheBlYgC64oCBKVaHvSBwV0ghAhKC2dY0tPBE8mlxnUGkMlkxiRdAq5K2lOtVv+MAm+VoFh/FPMfC/qAOeBbsOdA/QYllnSwIeEAvPej4b0XuwoXM9P5gQPThcHD5vw+EwuCAn32YRDINQVuWnCRHntkeGHgFcwEEOSSZWLKAzUZj5FdeLEp0I20gzevySXLkr262rODXROIAm/G6XrY6u2KwFbgx4r1hImTAN6sBDe9B/4NeI/5s8Aosm/+WL729rYEgtL8BPiPBH2GnQoKiZbw4LPaLpkvAmNA2WLu8XcmR5ahwylYhdsngp2GnQryiam28LhKwANA2VwsF+R21RrjWxboJnzLAt2Gb0mgU7jB5VbwyAJvfFF7AdnnHnYiZtrBjxXrCcU1G8K/W+7hkVbwyAK2wkkZvcCl6cLA4QhbbSyEF96aGPy1Xe1NBYJAztAOAIM9wWx9BunWH5mO4JEE/to3v1uww9CiwQ1JU2+eXXiv8TUDCGZ/6u8EHkmgJx4bWW3ZD6BJgxtgzzOxJrGiO/ZGhQ8PD2fT6fS7Q0ND/ZEEMJ8BkKgEheQcaBK4LtmhhsTx/OA5b36c5d7xTefcuZeBKedcHqK8ir1lMMD4/fXifBZzGcmfcbKnhB2ybC0DHDie331+01qhQygSiyQgsxEQwBFndkQShtFYhoL7I4I3zKYCZtQlMFgEfhRWManizSoe6vElf+G2CgS5xEuvnf/t6Inxe69tB9RWwHu/YmYA6w8jZjoB3YTHQqaHtQVRDgcfSqVSd3YR9o+EW+/hsHsF1o5mLp1OnwPGgXngAtv8Q94gsRCelDRXrVZzgG+sAQ88A7wPZIEnuwxvRtKcc+7ZkLn+cJpKpR50zg3fDrb3/udqtfp1A/6/yN+YYbjrot53XgAAAABJRU5ErkJggg==">
+                                                            </button>
+                                                            <button class="btn btn-transparent p-2" type="button"><img
+                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADp0lEQVRYhc2X32ubVRjHP8+bbEtNdS2zorlpm5OklUCsFAXZnLqq+C94I/PCi13o9ZAxIojCQLzxQnajBS+m4rU3Zm5uzEGFsWJUurxNLFVLW9iwXdcmb87jRd7YvG1+tSno9yYn53yf5/nmeU6ecw78x5C9kIeHh58Ih8MTItLfbF1V16vV6q1SqbR04AISicR7qnoWONyBWhaRDwuFQvbABBhjTgOfAR6QA/5uQX0EmALCwGnXdac7+Q53IwB4G0BE3iwUCl90EPsGMA2843+2hdOJMD4+fgyYAB4AX3fiRyKRS8AG8HQqlXq0ZwHlcvlFn3ejUChsdeLn8/kycBMQz/NOduLvKoEx5riqfgBMiki0YelqJ2cNuAKcEpFvjDGo6n0R+Ql413XdG43EQAaMMceBqyJyckfwVWvtV91G97mr9e++rxeAHxKJxHMtDY0xV4wxGo/HP8pkMtGWxD0ik8lEE4nEx8YYNcb82LgW+BvG4/F1EYlGo9H+2dnZ+wclACCdTvdvbm6uAWXXdY/U5wMlqKf9oIMD5PP5dX8YaGQ7N+GfQGx0dPRbx3FSO8k9oAzc8cd/tBSgqudE5KLjOK8dUOBGxKl10nONk7tacSqVilcqldcdx3kf+EtELvUaWVXXVfV2OBy+NTc3N99WAMDIyMh4KBT6FZhzXXesl+DGmC+BpyKRSMZvUgE0PQs8z1sOhUIAQ70E9/EqMLC2thalthcCaNqKFxcX71Kr18Dk5OShxrWz134fzOaWTqG6nT1VOX95aSr7fXGgkZtOpw8DR4HKwsLCvWaxWp0FSq2TyerqauBAOVI+dEHRXDa3PFWfO59bfllUv8P2XWjkViqVIWplXvF9di0A3wjHcQJlEOQogBU7uD1p/V+ugQyo6hCAiKy0CtJRgIg81obTFp7nDflC9i+AHjaiiNRt9yVgeYcT3ysWwBGt/uvEHytUCaJuu9wqSLsrWfMMVPUTHLn7oBrJbYvauoxGPrViA9e1bjLQUoCqrojILgHZV2LXgeuBuZdG7wFnmrip75/9l0BVY204baGqj+9bgLX2FwARORGLxR7aa/BMJhMVked9IT/vWUCpVPoNmAEG+/r6Pk+n001fQ80wNjb28MbGxjQwANycn5+/04rb9mGSTCYnrLXXgH5qnXEGWG9n43OfBY4Ba9baE8VicXZfAhpEXASe6cTdgRlr7VvFYvF2O1LXb8NkMvmkqnZzS9ryPG/OL+H/H/8AzDJIFzqAtQMAAAAASUVORK5CYII="></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                            <!--end::Table Widget 3-->
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                </div>
+                <!--end::Container-->
+            </div>
+            <!--end::Content-->
+            <!--begin::Footer-->
+            {% include 'components/footer.html' %}
+
+            <!--end::Footer-->
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Page-->
+</div>
+<!--end::Root-->
+<!--end::Main-->
+
+<!--begin::Scrolltop-->
+<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+    <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+    <span class="svg-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black" />
+            <path
+                d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                fill="black" />
+        </svg>
+    </span>
+    <!--end::Svg Icon-->
+</div>
+<!--end::Scrolltop-->
+<script>
+    $(document).ready(function () {
+        $('#all_post_listing').DataTable();
+        $('#all_group_listing').DataTable();
+        $('#all_profiles_listing').DataTable();
+        $('#all_comments_listing').DataTable();
+        $('#all_pages_listing').DataTable();
+    });
+</script>
+
+
+
+{% endblock %}

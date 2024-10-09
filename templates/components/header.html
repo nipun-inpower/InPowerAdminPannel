@@ -1,0 +1,39 @@
+{% load static %} 
+
+
+<!--begin::Header-->
+<div id="kt_header" style="" class="header align-items-stretch">
+    <!--begin::Brand-->
+    <div class="header-brand">
+        <!--begin::Logo-->
+        <a href="/good/index.html">
+            <img alt="Logo" src="{% static 'images/logo.jpg' %}" class="h-50px" />
+
+        </a>
+        <!--end::Logo-->
+
+    </div>
+    <!--end::Brand-->
+    <!--begin::Topbar-->
+    <div class="topbar">
+        <!--begin::Topbar container-->
+        <div
+            class="container-fluid py-6 py-lg-0 d-flex flex-column flex-sm-row align-items-lg-stretch justify-content-sm-between">
+            <!--begin::Page title-->
+            <div class="page-title d-flex flex-column me-5 justify-content-center">
+                <!--begin::Title-->
+                <h1 class="d-flex flex-column text-dark fw-bolder fs-2 mb-0">
+                    
+                    {% block title %}
+                        {{ default_title }}
+                    {% endblock %}
+                </h1>
+            </div>
+            <!--end::Page title-->
+
+        </div>
+        <!--end::Topbar container-->
+    </div>
+    <!--end::Topbar-->
+</div>
+<!--end::Header-->
